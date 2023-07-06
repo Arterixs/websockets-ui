@@ -1,8 +1,9 @@
 {
   "compilerOptions": {
-    "baseUrl": "src",
+    "baseUrl": ".",
     "forceConsistentCasingInFileNames": true,
     "allowSyntheticDefaultImports": true,
+    "allowJs": true,
     "esModuleInterop": true,
     "lib": ["ESNext", "dom"],
     "module": "ESNext",
