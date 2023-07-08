@@ -19,12 +19,14 @@ export const addGame = (object: AddUserToRoomClient, socket: Socket) => {
     arrUsersRoom.push({ name: user.data.name, index: user.data.index });
     dataBase.deleteRoom(indexRoom);
     const arrUsersPlay = [socketOwnerRoom, socket];
-    arrUsersPlay.forEach((item) => {
+    const idPlayesrs = [ownerId, user.data.index];
+    console.log(ownerId, user.data.index);
+    arrUsersPlay.forEach((item, indx) => {
       if (item) {
         item.send(
           JSON.stringify({
             type: 'create_game',
-            data: JSON.stringify({ idGame: ownerId, idPlayer: user.data.name }),
+            data: JSON.stringify({ idGame: indexRoom, idPlayer: idPlayesrs[indx] }),
             id: 0,
           })
         );

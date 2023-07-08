@@ -3,6 +3,7 @@ import { TypeData } from '../types/enum/typeData.js';
 import { RegObject } from '../types/interface/reg.js';
 import { RoomObject } from '../types/interface/room.js';
 import { UnknownData } from '../types/interface/unknownData.js';
+import { AddShips } from '../types/interface/addShips.js';
 
 export const defineTypeJson = (data: unknown) => {
   if (data && typeof data === 'object' && !Array.isArray(data)) {
@@ -22,6 +23,10 @@ export const defineTypeJson = (data: unknown) => {
       }
       if (unknownData.type === TypeData.ADD_USER_ROOM) {
         const roomObject = unknownData as AddUserToRoomClient;
+        return roomObject;
+      }
+      if (unknownData.type === TypeData.ADD_SHIPS) {
+        const roomObject = unknownData as AddShips;
         return roomObject;
       }
     }
