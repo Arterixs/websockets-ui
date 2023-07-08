@@ -1,15 +1,16 @@
 import { Socket } from '../types/types/common.js';
-import { TypeData } from '../types/enum/typeData.js';
 import { UpdateUser } from '../types/interface/reg.js';
-import { RoomData, RoomObject, RoomResponse } from '../types/interface/room.js';
-import { DataRoom } from '../types/interface/addUser.js';
+import { RoomData } from '../types/interface/room.js';
+import { ShipsObject } from '../types/interface/position.js';
 
 class Model {
   private userDataBase: Map<Socket, UpdateUser>;
 
   private roomDataBase: Map<number, RoomData>;
 
-  private socketData: Map<number, Socket>;
+  private socketCommonsUser: Map<number, Socket>;
+
+  private game: Map<number, ShipsObject[]>;
 
   private idGeneration: number;
 
@@ -18,16 +19,29 @@ class Model {
   constructor() {
     this.userDataBase = new Map();
     this.roomDataBase = new Map();
-    this.socketData = new Map();
-    this.idGeneration = 0;
+    this.socketCommonsUser = new Map();
+    this.game = new Map();
+    this.idGeneration = 1;
     this.idRoomGeneration = 0;
+  }
+
+  public setDataGame(idPlayer: number, dataTroops: ShipsObject[]) {
+    this.game.set(idPlayer, dataTroops);
+  }
+
+  public getDataGames() {
+    return this.game.entries();
+  }
+
+  public getSizePlayers() {
+    return this.game.size;
   }
 
   public setData(socket: Socket, user: UpdateUser) {
     const userClone = user;
     userClone.data.index = this.idGeneration;
     this.userDataBase.set(socket, userClone);
-    this.socketData.set(this.idGeneration, socket);
+    this.socketCommonsUser.set(this.idGeneration, socket);
     this.increaseCounter();
     return { type: userClone.type, data: JSON.stringify(userClone.data), id: userClone.id };
   }
@@ -38,7 +52,7 @@ class Model {
   }
 
   public getSocketUsers(idUser: number) {
-    return this.socketData.get(idUser);
+    return this.socketCommonsUser.get(idUser);
   }
 
   public getRoom(idRoom: number) {

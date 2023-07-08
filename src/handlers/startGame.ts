@@ -20,7 +20,6 @@ export const addGame = (object: AddUserToRoomClient, socket: Socket) => {
     dataBase.deleteRoom(indexRoom);
     const arrUsersPlay = [socketOwnerRoom, socket];
     const idPlayesrs = [ownerId, user.data.index];
-    console.log(ownerId, user.data.index);
     arrUsersPlay.forEach((item, indx) => {
       if (item) {
         item.send(
