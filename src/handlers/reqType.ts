@@ -1,4 +1,4 @@
-import { Socket } from '../types/types/websoket.js';
+import { Socket } from '../types/types/common.js';
 import { dataBase } from '../data_base/data_base.js';
 import { DataReg, RegObject, UpdateUser } from '../types/interface/reg.js';
 

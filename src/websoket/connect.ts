@@ -1,7 +1,8 @@
-import { Socket } from '../types/types/websoket.js';
+import { Socket } from '../types/types/common.js';
 import { convertToJson } from '../helpers/convertToJson.js';
 import { controllerType } from '../controller/controllerType.js';
 import { defineTypeJson } from '../helpers/defineTypeJson.js';
+import { dataBase } from '../data_base/data_base.js';
 
 export const onConnect = (socket: Socket) => {
   try {
@@ -11,6 +12,7 @@ export const onConnect = (socket: Socket) => {
       controllerType[objectData.type](objectData, socket);
     });
     socket.on('close', () => {
+      dataBase.deleteUser(socket);
       console.log('Пользователь отключился');
     });
   } catch (err) {

@@ -8,11 +8,11 @@ export interface RoomObject {
 
 export interface RoomResponse {
   type: TypeData;
-  data: DataRoom[];
+  data: RoomData[];
   id: number;
 }
 
-interface DataRoom {
+export interface RoomData {
   roomId: number;
   roomUsers: RoomUsers[];
 }

@@ -1,25 +1,28 @@
-import { Socket } from '../types/types/websoket.js';
+import { Socket } from '../types/types/common.js';
 import { RoomObject } from '../types/interface/room.js';
 import { dataBase } from '../data_base/data_base.js';
 import { TypeData } from '../types/enum/typeData.js';
 
-const createObjectRoom = (name: string, index: number, roomId: number) => {
+const createObjectRoom = (data: string) => {
   const object = {
     type: TypeData.UPDATE_ROOM,
-    data: [
-      {
-        roomId,
-        roomUsers: [
-          {
-            name,
-            index,
-          },
-        ],
-      },
-    ],
+    data,
     id: 0,
   };
-  return object;
+  return JSON.stringify(object);
+};
+
+const createDataObject = (roomId: number, name: string, index: number) => {
+  const arrRoom = {
+    roomId,
+    roomUsers: [
+      {
+        name,
+        index,
+      },
+    ],
+  };
+  return arrRoom;
 };
 
 export const roomType = (_room: RoomObject, socket: Socket) => {
@@ -27,9 +30,14 @@ export const roomType = (_room: RoomObject, socket: Socket) => {
     const userObject = dataBase.getUserObject(socket);
     if (userObject) {
       const { data } = userObject;
-      const roomObject = createObjectRoom(data.name, data.index, dataBase.getRoomId());
+      const roomObject = createDataObject(dataBase.getRoomId(), data.name, data.index);
       dataBase.setRoomData(roomObject);
-      socket.send(JSON.stringify({ ...roomObject, data: JSON.stringify(roomObject.data) }));
+      const users = dataBase.getSocketsUsers();
+      const roomMessage = createObjectRoom(JSON.stringify([roomObject]));
+      // eslint-disable-next-line no-restricted-syntax
+      for (const user of users) {
+        user.send(roomMessage);
+      }
     }
   }
 };
