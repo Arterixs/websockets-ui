@@ -6,7 +6,9 @@ import { ShipsObject } from '../types/interface/position.js';
 class Model {
   private userDataBase: Map<Socket, UpdateUser>;
 
-  private roomDataBase: Map<number, RoomData>;
+  // private roomDataBase: Map<number, RoomData[]>;
+
+  private roomDataBase: RoomData[];
 
   private socketCommonsUser: Map<number, Socket>;
 
@@ -18,7 +20,8 @@ class Model {
 
   constructor() {
     this.userDataBase = new Map();
-    this.roomDataBase = new Map();
+    // this.roomDataBase = new Map();
+    this.roomDataBase = [];
     this.socketCommonsUser = new Map();
     this.game = new Map();
     this.idGeneration = 1;
@@ -46,18 +49,44 @@ class Model {
     return { type: userClone.type, data: JSON.stringify(userClone.data), id: userClone.id };
   }
 
-  public setRoomData(room: RoomData) {
-    this.roomDataBase.set(this.idRoomGeneration, room);
-    this.increaseRoomCounter();
+  // public setRoomData(room: RoomData) {
+  //   // this.roomDataBase.set(this.idRoomGeneration, room);
+  //   this.increaseRoomCounter();
+  // }
+
+  public createRoom(room: RoomData, indexPlayer: number) {
+    const isCheckCreater = this.checkPlayerCreater(indexPlayer);
+    if (!isCheckCreater) {
+      this.roomDataBase.push(room);
+      this.increaseRoomCounter();
+    }
+  }
+
+  public getActualStringRoom() {
+    return JSON.stringify(this.roomDataBase);
+  }
+
+  private checkPlayerCreater(indexPlayer: number) {
+    const checkPlayerCreate = this.roomDataBase.reduce((acc: boolean[], item) => {
+      const isPlayer = item.roomUsers.find((userData) => userData.index === indexPlayer);
+      if (isPlayer) {
+        acc.push(true);
+        return acc;
+      }
+      acc.push(false);
+      return acc;
+    }, []);
+    const isCreater = checkPlayerCreate.some((item) => item);
+    return isCreater;
   }
 
   public getSocketUsers(idUser: number) {
     return this.socketCommonsUser.get(idUser);
   }
 
-  public getRoom(idRoom: number) {
-    return this.roomDataBase.get(idRoom);
-  }
+  // public getRoom(idRoom: number) {
+  //   return this.roomDataBase.get(idRoom);
+  // }
 
   public getUserObject(socket: Socket) {
     return this.userDataBase.get(socket);
@@ -79,9 +108,9 @@ class Model {
     this.idRoomGeneration += 1;
   }
 
-  public deleteRoom(idRoom: number) {
-    this.roomDataBase.delete(idRoom);
-  }
+  // public deleteRoom(idRoom: number) {
+  //   this.roomDataBase.delete(idRoom);
+  // }
 
   public deleteUser(socket: Socket) {
     this.userDataBase.delete(socket);

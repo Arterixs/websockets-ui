@@ -31,9 +31,10 @@ export const roomType = (_room: RoomObject, socket: Socket) => {
     if (userObject) {
       const { data } = userObject;
       const roomObject = createDataObject(dataBase.getRoomId(), data.name, data.index);
-      dataBase.setRoomData(roomObject);
+      dataBase.createRoom(roomObject, data.index);
       const users = dataBase.getSocketsUsers();
-      const roomMessage = createObjectRoom(JSON.stringify([roomObject]));
+      const rooms = dataBase.getActualStringRoom();
+      const roomMessage = createObjectRoom(rooms);
       // eslint-disable-next-line no-restricted-syntax
       for (const user of users) {
         user.send(roomMessage);

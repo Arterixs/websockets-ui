@@ -1,6 +1,7 @@
 import { Socket } from '../types/types/common.js';
 import { dataBase } from '../data_base/data_base.js';
 import { DataReg, RegObject, UpdateUser } from '../types/interface/reg.js';
+import { TypeData } from '../types/enum/typeData.js';
 
 const updateDataPropertyUser = (data: string) => {
   const { password, name } = JSON.parse(data) as DataReg;
@@ -18,5 +19,7 @@ const updateObject = (obj: RegObject) => {
 export const regType = (user: RegObject, socket: Socket) => {
   const fullUser = updateObject(user);
   const readyUser = dataBase.setData(socket, fullUser);
+  const actualRoom = dataBase.getActualStringRoom();
   socket.send(JSON.stringify(readyUser));
+  socket.send(JSON.stringify({ type: TypeData.UPDATE_ROOM, data: actualRoom, id: 0 }));
 };
