@@ -40,13 +40,22 @@ class Model {
     return this.game.size;
   }
 
-  public setData(socket: Socket, user: UpdateUser) {
-    const userClone = user;
-    userClone.data.index = this.idGeneration;
-    this.userDataBase.set(socket, userClone);
-    this.socketCommonsUser.set(this.idGeneration, socket);
+  // public setData(socket: Socket, user: UpdateUser) {
+  //   const userClone = user;
+  //   userClone.data.index = this.idGeneration;
+  //   this.userDataBase.set(socket, userClone);
+  //   this.socketCommonsUser.set(this.idGeneration, socket);
+  //   this.increaseCounter();
+  //   return { type: userClone.type, data: JSON.stringify(userClone.data), id: userClone.id };
+  // }
+
+  public setUser(socket: Socket, user: UpdateUser) {
+    this.userDataBase.set(socket, user);
     this.increaseCounter();
-    return { type: userClone.type, data: JSON.stringify(userClone.data), id: userClone.id };
+  }
+
+  public getUser(socket: Socket) {
+    return this.userDataBase.get(socket);
   }
 
   // public setRoomData(room: RoomData) {
@@ -82,6 +91,10 @@ class Model {
 
   public getSocketUsers(idUser: number) {
     return this.socketCommonsUser.get(idUser);
+  }
+
+  public getIdUser() {
+    return this.idGeneration;
   }
 
   // public getRoom(idRoom: number) {

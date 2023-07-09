@@ -1,4 +1,5 @@
 import { TypeData } from '../enum/typeData.js';
+import { Socket } from '../types/common.js';
 
 export interface RegObject {
   type: TypeData.REG;
@@ -10,6 +11,7 @@ export interface UpdateUser {
   type: string;
   data: DataBase;
   id: number;
+  socket: Socket;
 }
 
 export interface DataReg {
