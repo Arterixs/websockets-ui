@@ -4,6 +4,7 @@ import { RegObject } from '../types/interface/reg.js';
 import { RoomObject } from '../types/interface/room.js';
 import { UnknownData } from '../types/interface/unknownData.js';
 import { AddShips } from '../types/interface/addShips.js';
+import { AttackClient } from '../types/interface/attack.js';
 
 export const defineTypeJson = (data: unknown) => {
   if (data && typeof data === 'object' && !Array.isArray(data)) {
@@ -14,20 +15,19 @@ export const defineTypeJson = (data: unknown) => {
     ) {
       const unknownData = data as UnknownData;
       if (unknownData.type === TypeData.REG) {
-        const regObj = unknownData as RegObject;
-        return regObj;
+        return unknownData as RegObject;
       }
       if (unknownData.type === TypeData.CREATE_ROOM) {
-        const roomObject = unknownData as RoomObject;
-        return roomObject;
+        return unknownData as RoomObject;
       }
       if (unknownData.type === TypeData.ADD_USER_ROOM) {
-        const roomObject = unknownData as AddUserToRoomClient;
-        return roomObject;
+        return unknownData as AddUserToRoomClient;
       }
       if (unknownData.type === TypeData.ADD_SHIPS) {
-        const roomObject = unknownData as AddShips;
-        return roomObject;
+        return unknownData as AddShips;
+      }
+      if (unknownData.type === TypeData.ATTACK) {
+        return unknownData as AttackClient;
       }
     }
     throw new Error();

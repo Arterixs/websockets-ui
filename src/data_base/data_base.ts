@@ -22,7 +22,7 @@ class Model {
     this.socketCommonsUser = new Map();
     this.gameRooms = new Map();
     this.idGeneration = 1;
-    this.idRoomGeneration = 0;
+    this.idRoomGeneration = 1;
   }
 
   public setDataGame(idRoom: number, dataTroops: PositionShipsObject) {
@@ -40,8 +40,12 @@ class Model {
     return room;
   }
 
-  public getSizePlayers() {
-    return this.gameRooms.size;
+  public getSizePlayers(idRoom: number) {
+    const room = this.getRoomGame(idRoom);
+    if (room) {
+      return room.length;
+    }
+    return 0;
   }
 
   public setUser(socket: Socket, user: UpdateUser) {

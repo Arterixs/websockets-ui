@@ -8,7 +8,7 @@ const MAX_AMOUNT_PLAYERS_IN_ROOM = 2;
 export const addShips = (object: AddShips, _socket: Socket) => {
   const objectData = JSON.parse(object.data) as PositionShipsObject;
   dataBase.setDataGame(objectData.gameId, objectData);
-  const amountPlayersReady = dataBase.getSizePlayers();
+  const amountPlayersReady = dataBase.getSizePlayers(objectData.gameId);
   if (amountPlayersReady === MAX_AMOUNT_PLAYERS_IN_ROOM) {
     const arrayRoom = dataBase.getRoomGame(objectData.gameId);
     if (arrayRoom) {

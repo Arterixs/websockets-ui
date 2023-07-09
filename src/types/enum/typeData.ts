@@ -4,4 +4,5 @@ export const enum TypeData {
   ADD_USER_ROOM = 'add_user_to_room',
   UPDATE_ROOM = 'update_room',
   ADD_SHIPS = 'add_ships',
+  ATTACK = 'attack',
 }
