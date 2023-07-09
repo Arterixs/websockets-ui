@@ -27,7 +27,7 @@ const createDataObject = (roomId: number, name: string, index: number) => {
 
 export const roomType = (_room: RoomObject, socket: Socket) => {
   if (dataBase.checkUserDataBase(socket)) {
-    const userObject = dataBase.getUserObject(socket);
+    const userObject = dataBase.getUser(socket);
     if (userObject) {
       const { data } = userObject;
       const roomObject = createDataObject(dataBase.getRoomId(), data.name, data.index);

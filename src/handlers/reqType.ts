@@ -23,6 +23,6 @@ export const regType = (user: RegObject, socket: Socket) => {
   dataBase.setUser(socket, fullUser);
   const userReg = dataBase.getUser(socket);
   const actualRoom = dataBase.getActualStringRoom();
-  socket.send(JSON.stringify({ type: TypeData.REG, data: JSON.stringify(userReg, ['data']), id: 0 }));
+  socket.send(JSON.stringify({ type: TypeData.REG, data: JSON.stringify(userReg?.data), id: 0 }));
   socket.send(JSON.stringify({ type: TypeData.UPDATE_ROOM, data: actualRoom, id: 0 }));
 };

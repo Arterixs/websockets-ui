@@ -1,18 +1,16 @@
 import { Socket } from '../types/types/common.js';
 import { UpdateUser } from '../types/interface/reg.js';
 import { RoomData } from '../types/interface/room.js';
-import { ShipsObject } from '../types/interface/position.js';
+import { PositionShipsObject } from '../types/interface/position.js';
 
 class Model {
   private userDataBase: Map<Socket, UpdateUser>;
-
-  // private roomDataBase: Map<number, RoomData[]>;
 
   private roomDataBase: RoomData[];
 
   private socketCommonsUser: Map<number, Socket>;
 
-  private game: Map<number, ShipsObject[]>;
+  private gameRooms: Map<number, PositionShipsObject[]>;
 
   private idGeneration: number;
 
@@ -20,48 +18,41 @@ class Model {
 
   constructor() {
     this.userDataBase = new Map();
-    // this.roomDataBase = new Map();
     this.roomDataBase = [];
     this.socketCommonsUser = new Map();
-    this.game = new Map();
+    this.gameRooms = new Map();
     this.idGeneration = 1;
     this.idRoomGeneration = 0;
   }
 
-  public setDataGame(idPlayer: number, dataTroops: ShipsObject[]) {
-    this.game.set(idPlayer, dataTroops);
+  public setDataGame(idRoom: number, dataTroops: PositionShipsObject) {
+    if (this.gameRooms.has(idRoom)) {
+      const room = this.gameRooms.get(idRoom) as PositionShipsObject[];
+      room.push(dataTroops);
+      this.gameRooms.set(idRoom, room);
+    } else {
+      this.gameRooms.set(idRoom, [dataTroops]);
+    }
   }
 
-  public getDataGames() {
-    return this.game.entries();
+  public getRoomGame(idRoom: number) {
+    const room = this.gameRooms.get(idRoom);
+    return room;
   }
 
   public getSizePlayers() {
-    return this.game.size;
+    return this.gameRooms.size;
   }
-
-  // public setData(socket: Socket, user: UpdateUser) {
-  //   const userClone = user;
-  //   userClone.data.index = this.idGeneration;
-  //   this.userDataBase.set(socket, userClone);
-  //   this.socketCommonsUser.set(this.idGeneration, socket);
-  //   this.increaseCounter();
-  //   return { type: userClone.type, data: JSON.stringify(userClone.data), id: userClone.id };
-  // }
 
   public setUser(socket: Socket, user: UpdateUser) {
     this.userDataBase.set(socket, user);
+    this.socketCommonsUser.set(user.data.index, socket);
     this.increaseCounter();
   }
 
   public getUser(socket: Socket) {
     return this.userDataBase.get(socket);
   }
-
-  // public setRoomData(room: RoomData) {
-  //   // this.roomDataBase.set(this.idRoomGeneration, room);
-  //   this.increaseRoomCounter();
-  // }
 
   public createRoom(room: RoomData, indexPlayer: number) {
     const isCheckCreater = this.checkPlayerCreater(indexPlayer);
@@ -97,12 +88,8 @@ class Model {
     return this.idGeneration;
   }
 
-  // public getRoom(idRoom: number) {
-  //   return this.roomDataBase.get(idRoom);
-  // }
-
-  public getUserObject(socket: Socket) {
-    return this.userDataBase.get(socket);
+  public getRoom(idRoom: number) {
+    return this.roomDataBase.find((item) => item.roomId === idRoom);
   }
 
   public checkUserDataBase(socket: Socket) {
@@ -121,16 +108,17 @@ class Model {
     this.idRoomGeneration += 1;
   }
 
-  // public deleteRoom(idRoom: number) {
-  //   this.roomDataBase.delete(idRoom);
-  // }
+  public deleteRoom(idRoom: number) {
+    const updateArray = this.roomDataBase.filter((item) => item.roomId !== idRoom);
+    this.roomDataBase = updateArray;
+  }
 
   public deleteUser(socket: Socket) {
     this.userDataBase.delete(socket);
   }
 
   public getSocketsUsers() {
-    return this.userDataBase.keys();
+    return this.socketCommonsUser.values();
   }
 }
 
