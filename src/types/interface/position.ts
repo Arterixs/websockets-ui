@@ -13,7 +13,7 @@ export interface ShipsObject {
   length: number;
 }
 
-interface ShipCoords {
+export interface ShipCoords {
   x: number;
   y: number;
 }

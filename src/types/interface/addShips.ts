@@ -14,7 +14,7 @@ export interface DataShips {
   hitpoint: number;
 }
 
-interface Position {
+export interface Position {
   x: number;
   y: number;
 }

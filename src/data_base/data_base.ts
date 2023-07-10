@@ -36,8 +36,8 @@ class Model {
           type: 'empty',
           length: 0,
           direction: false,
-          positionX: 0,
-          positionY: 0,
+          positionX: j,
+          positionY: i,
           hitpoint: 0,
         });
       }
