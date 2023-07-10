@@ -6,7 +6,7 @@ export interface AttackClient {
   id: number;
 }
 
-interface AttackData {
+export interface AttackData {
   gameId: number;
   x: number;
   y: number;

@@ -5,3 +5,25 @@ export interface AddShips {
   data: string;
   id: number;
 }
+
+export interface DataShips {
+  position: Position;
+  direction: boolean;
+  type: 'large' | 'medium' | 'small' | 'huge';
+  length: number;
+  hitpoint: number;
+}
+
+interface Position {
+  x: number;
+  y: number;
+}
+
+export interface ShipObjectMap {
+  type: string;
+  length: number;
+  direction: boolean;
+  positionX: number;
+  positionY: number;
+  hitpoint: number;
+}
