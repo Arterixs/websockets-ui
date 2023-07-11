@@ -1,4 +1,6 @@
 import { TypeData } from '../enum/typeData.js';
+import { StatusResultOfAttacks } from '../enum/typeResultAttack.js';
+import { Position } from './addShips.js';
 
 export interface AttackClient {
   type: TypeData.ATTACK;
@@ -11,4 +13,14 @@ export interface AttackData {
   x: number;
   y: number;
   indexPlayer: number;
+}
+
+export interface DataResultOfAttacks {
+  position: Position;
+  currentPlayer: number;
+  status: StatusResultOfAttacks;
+}
+
+export interface DataNextPlayer {
+  currentPlayer: number;
 }

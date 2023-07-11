@@ -1,7 +1,6 @@
 import { NewShips, ShipStorage, Socket } from '../types/types/common.js';
 import { UpdateUser } from '../types/interface/reg.js';
 import { RoomData } from '../types/interface/room.js';
-import { PositionShipsObject, ShipsObject } from '../types/interface/position.js';
 import { DataShips, ShipObjectMap } from '../types/interface/addShips.js';
 
 class Model {
