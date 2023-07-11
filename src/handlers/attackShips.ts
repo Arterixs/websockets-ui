@@ -3,45 +3,8 @@ import { dataBase } from '../data_base/data_base.js';
 import { AttackClient, AttackData } from '../types/interface/attack.js';
 import { Socket } from '../types/types/common.js';
 import { Position, ShipObjectMap } from '../types/interface/addShips.js';
-
-const getBodyShip = (direction: boolean, x: number, y: number, length: number) => {
-  const bodyShip = [];
-  for (let i = 0; i < length; i += 1) {
-    if (direction) {
-      bodyShip.push({ x, y: y + i });
-    } else {
-      bodyShip.push({ x: x + i, y });
-    }
-  }
-  return bodyShip;
-};
-
-const findCoordsMiss = (dataEnemy: ShipObjectMap[][], bodyShip: Position[]) => {
-  const aroundShip = [] as ShipObjectMap[];
-  bodyShip.forEach((item) => {
-    const upCenter = dataEnemy[item.y - 1]?.[item.x];
-    const upLeft = dataEnemy[item.y - 1]?.[item.x - 1];
-    const upRight = dataEnemy[item.y - 1]?.[item.x + 1];
-    const middleLeft = dataEnemy[item.y]?.[item.x - 1];
-    const middleRight = dataEnemy[item.y]?.[item.x + 1];
-    const bottomLeft = dataEnemy[item.y + 1]?.[item.x - 1];
-    const bottomRight = dataEnemy[item.y + 1]?.[item.x + 1];
-    const bottomCenter = dataEnemy[item.y + 1]?.[item.x];
-    const arrDataCell = [
-      upCenter!,
-      upLeft!,
-      upRight!,
-      middleLeft!,
-      middleRight!,
-      bottomLeft!,
-      bottomRight!,
-      bottomCenter!,
-    ];
-    const updateArr = arrDataCell.filter((cell) => cell?.type === 'empty');
-    aroundShip.push(...updateArr);
-  });
-  return aroundShip;
-};
+import { getCoordsAroundShip } from '../helpers/getCoordsAroundShip.js';
+import { getBodyShip } from '../helpers/getBodyShip.js';
 
 export const attackShips = (object: AttackClient, socket: Socket) => {
   const dataAttack = JSON.parse(object.data) as AttackData;
@@ -75,7 +38,7 @@ export const attackShips = (object: AttackClient, socket: Socket) => {
         });
       } else {
         const bodyShip = getBodyShip(direction, positionX, positionY, length);
-        const aroundShipPlace = findCoordsMiss(gameMap, bodyShip);
+        const aroundShipPlace = getCoordsAroundShip(gameMap, bodyShip);
         bodyShip.forEach((item) => {
           socketsArray[0]?.send(
             JSON.stringify({
