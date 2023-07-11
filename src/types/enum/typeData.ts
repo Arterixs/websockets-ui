@@ -6,4 +6,5 @@ export const enum TypeData {
   ADD_SHIPS = 'add_ships',
   ATTACK = 'attack',
   TURN = 'turn',
+  START_GAME = 'start_game',
 }

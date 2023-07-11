@@ -84,8 +84,7 @@ class Model {
   }
 
   public getRoomGame(idRoom: number) {
-    const room = this.gameRooms.get(idRoom);
-    return room;
+    return this.gameRooms.get(idRoom);
   }
 
   public getSizePlayers(idRoom: number) {

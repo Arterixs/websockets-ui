@@ -1,4 +1,4 @@
-import { Position, ShipObjectMap } from 'src/types/interface/addShips.js';
+import { Position, ShipObjectMap } from '../types/interface/addShips.js';
 
 export const getCoordsAroundShip = (dataEnemy: ShipObjectMap[][], bodyShip: Position[]) => {
   const aroundShip: ShipObjectMap[] = [];
