@@ -6,6 +6,7 @@ import { getResultDataObject, getResponseObject } from './createrObjects.js';
 import { StatusResultOfAttacks } from '../types/enum/typeResultAttack.js';
 import { getBodyShip } from './getBodyShip.js';
 import { getCoordsAroundShip } from './getCoordsAroundShip.js';
+import { dataBase } from '../data_base/data_base.js';
 
 export const hitInShip = (
   dataAttack: AttackData,
@@ -15,7 +16,8 @@ export const hitInShip = (
   gameMap: ShipObjectMap[][]
 ) => {
   const { direction, length, positionX, positionY } = placeShoot;
-  const { x, y, indexPlayer } = dataAttack;
+  const { x, y, indexPlayer, gameId } = dataAttack;
+  dataBase.changePlayerMove(gameId, indexPlayer);
 
   if (hitpontShip) {
     socketsArray.forEach((webSocket) => {

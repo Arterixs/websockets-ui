@@ -1,4 +1,5 @@
 import { TypeData } from '../enum/typeData.js';
+import { ShipStorage } from '../types/common.js';
 
 export interface RoomObject {
   type: TypeData.CREATE_ROOM;
@@ -20,4 +21,9 @@ export interface RoomData {
 interface RoomUsers {
   name: string;
   index: number;
+}
+
+export interface DatabaseGameRooms {
+  players: ShipStorage[];
+  playerMove: number;
 }

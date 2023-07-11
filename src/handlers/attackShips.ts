@@ -6,10 +6,9 @@ import { StatusResultOfAttacks } from '../types/enum/typeResultAttack.js';
 import { getResultDataObject, getResponseObject } from '../helpers/createrObjects.js';
 import { hitInShip } from '../helpers/hitShip.js';
 
-const checkMovePlayer = (socket: Socket, indexMovedPlayer: number) => {
-  const currentUser = dataBase.getUser(socket);
-  console.log(indexMovedPlayer, currentUser?.data.index);
-  if (currentUser?.data.index === indexMovedPlayer) {
+const checkMovePlayer = (gameId: number, indexMovedPlayer: number) => {
+  const currentUser = dataBase.getPlayerMove(gameId);
+  if (currentUser === indexMovedPlayer) {
     return true;
   }
   return false;
@@ -19,10 +18,10 @@ export const attackShips = (object: AttackClient, socket: Socket) => {
   const dataAttack = JSON.parse(object.data) as AttackData;
   const { x, y, gameId, indexPlayer } = dataAttack;
 
-  const isMovePlayer = checkMovePlayer(socket, indexPlayer);
+  const isMovePlayer = checkMovePlayer(gameId, indexPlayer);
   if (!isMovePlayer) return;
 
-  const dataGame = dataBase.getRoomGame(gameId);
+  const dataGame = dataBase.getRoomGame(gameId)?.players;
   if (dataGame) {
     const dataEnemyIndex = dataGame.findIndex((item) => item.indexPlayer !== indexPlayer);
     const dataEnemy = dataGame[dataEnemyIndex];
@@ -35,10 +34,10 @@ export const attackShips = (object: AttackClient, socket: Socket) => {
       const commonHits = dataEnemy!.commonHits - 1;
       dataGame[dataEnemyIndex]!.commonHits = commonHits;
       dataGame[dataEnemyIndex]!.gameMap[y]![x]!.hitpoint = hitpontShip;
-      dataBase.updateRoomGame(gameId, dataGame);
 
       hitInShip(dataAttack, hitpontShip, placeShoot, socketsArray, gameMap);
     } else {
+      dataBase.changePlayerMove(gameId, dataEnemy!.indexPlayer);
       socketsArray.forEach((webSocket) => {
         webSocket.send(
           getResponseObject(TypeData.ATTACK, getResultDataObject(x, y, indexPlayer, StatusResultOfAttacks.MISS))

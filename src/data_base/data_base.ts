@@ -1,6 +1,6 @@
 import { NewShips, ShipStorage, Socket } from '../types/types/common.js';
 import { UpdateUser } from '../types/interface/reg.js';
-import { RoomData } from '../types/interface/room.js';
+import { DatabaseGameRooms, RoomData } from '../types/interface/room.js';
 import { DataShips, ShipObjectMap } from '../types/interface/addShips.js';
 
 class Model {
@@ -10,7 +10,7 @@ class Model {
 
   private socketCommonsUser: Map<number, Socket>;
 
-  private gameRooms: Map<number, ShipStorage[]>;
+  private gameRooms: Map<number, DatabaseGameRooms>;
 
   private idGeneration: number;
 
@@ -71,17 +71,30 @@ class Model {
     const { gameId, indexPlayer, ships } = dataTroops;
     const dataShip = { gameId, indexPlayer, gameMap, commonHits, ships };
     if (this.gameRooms.has(idRoom)) {
-      const room = this.gameRooms.get(idRoom) as ShipStorage[];
-      room.push(dataShip);
+      const room = this.gameRooms.get(idRoom)!;
+      const { players } = room;
+      room.playerMove = indexPlayer;
+      players.push(dataShip);
       this.gameRooms.set(idRoom, room);
     } else {
-      this.gameRooms.set(idRoom, [dataShip]);
+      this.gameRooms.set(idRoom, { players: [dataShip], playerMove: 0 });
     }
   }
 
-  public updateRoomGame(idRoom: number, dataTroops: ShipStorage[]) {
-    this.gameRooms.set(idRoom, dataTroops);
+  public changePlayerMove(idRoom: number, playerId: number) {
+    const room = this.gameRooms.get(idRoom);
+    if (room) {
+      room.playerMove = playerId;
+    }
   }
+
+  public getPlayerMove(idRoom: number) {
+    return this.gameRooms.get(idRoom)?.playerMove;
+  }
+
+  // public updateRoomGame(idRoom: number, dataTroops: ShipStorage[]) {
+  //   this.gameRooms.set(idRoom, dataTroops);
+  // }
 
   public getRoomGame(idRoom: number) {
     return this.gameRooms.get(idRoom);
@@ -90,7 +103,7 @@ class Model {
   public getSizePlayers(idRoom: number) {
     const room = this.getRoomGame(idRoom);
     if (room) {
-      return room.length;
+      return room.players.length;
     }
     return 0;
   }

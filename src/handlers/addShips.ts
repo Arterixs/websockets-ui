@@ -21,7 +21,7 @@ export const addShips = (object: AddShips, _socket: Socket) => {
   dataBase.setDataGame(objectData.gameId, upgradeShips);
   const amountPlayersReady = dataBase.getSizePlayers(objectData.gameId);
   if (amountPlayersReady === MAX_AMOUNT_PLAYERS_IN_ROOM) {
-    const arrayRoom = dataBase.getRoomGame(objectData.gameId);
+    const arrayRoom = dataBase.getRoomGame(objectData.gameId)?.players;
     if (arrayRoom) {
       arrayRoom.forEach((item) => {
         const { indexPlayer, ships } = item;
