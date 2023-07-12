@@ -8,7 +8,7 @@ import { PositionShipsObject, ShipsObject } from '../interface/position.js';
 
 export type Socket = WebSocket;
 export type ClientReqData = RegObject | RoomObject | AddUserToRoomClient | AddShips | AttackClient;
-type UpgradeShips = ShipsObject & { hitpoint: number };
+export type UpgradeShips = ShipsObject & { hitpoint: number };
 export type NewShips = Pick<PositionShipsObject, 'gameId' | 'indexPlayer'> & { ships: UpgradeShips[] };
 export type ShipStorage = NewShips & {
   gameMap: ShipObjectMap[][];

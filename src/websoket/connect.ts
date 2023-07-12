@@ -7,9 +7,13 @@ import { dataBase } from '../data_base/data_base.js';
 export const onConnect = (socket: Socket) => {
   try {
     socket.on('message', (message: Buffer) => {
-      const newMessage = convertToJson(message);
-      const objectData = defineTypeJson(newMessage);
-      controllerType[objectData.type](objectData, socket);
+      try {
+        const newMessage = convertToJson(message);
+        const objectData = defineTypeJson(newMessage);
+        controllerType[objectData.type](objectData, socket);
+      } catch (err) {
+        console.log(err);
+      }
     });
     socket.on('close', () => {
       dataBase.deleteUser(socket);

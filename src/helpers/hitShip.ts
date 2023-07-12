@@ -10,7 +10,7 @@ import { dataBase } from '../data_base/data_base.js';
 
 export const hitInShip = (
   dataAttack: AttackData,
-  hitpontShip: number,
+  hitpontShip: boolean,
   placeShoot: ShipObjectMap,
   socketsArray: Socket[],
   gameMap: ShipObjectMap[][]
@@ -45,6 +45,8 @@ export const hitInShip = (
       );
     });
     placesAroundShip.forEach((item) => {
+      // eslint-disable-next-line no-param-reassign
+      item.shoot = true;
       socketsArray[0]?.send(
         getResponseObject(
           TypeData.ATTACK,

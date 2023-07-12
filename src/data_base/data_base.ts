@@ -1,4 +1,4 @@
-import { NewShips, ShipStorage, Socket } from '../types/types/common.js';
+import { NewShips, Socket } from '../types/types/common.js';
 import { UpdateUser } from '../types/interface/reg.js';
 import { DatabaseGameRooms, RoomData } from '../types/interface/room.js';
 import { DataShips, ShipObjectMap } from '../types/interface/addShips.js';
@@ -27,7 +27,7 @@ class Model {
 
   // eslint-disable-next-line class-methods-use-this
   public createGameField(ships: DataShips[]) {
-    const gameMap = [] as ShipObjectMap[][];
+    const gameMap: ShipObjectMap[][] = [];
     for (let i = 0; i < 10; i += 1) {
       const column = [];
       for (let j = 0; j < 10; j += 1) {
@@ -38,6 +38,7 @@ class Model {
           positionX: j,
           positionY: i,
           hitpoint: 0,
+          shoot: false,
         });
       }
       gameMap.push(column);
@@ -47,15 +48,16 @@ class Model {
       const { position, direction, length, hitpoint } = ship;
       const { x, y } = position;
       commonHits += hitpoint;
-      const objectShip = {
-        type: 'ship',
-        length,
-        direction,
-        positionX: x,
-        positionY: y,
-        hitpoint,
-      };
       for (let i = 0; i < length; i += 1) {
+        const objectShip = {
+          type: 'ship',
+          length,
+          direction,
+          positionX: x,
+          positionY: y,
+          hitpoint,
+          shoot: false,
+        };
         if (direction) {
           gameMap[y + i]![x] = objectShip;
         } else {
