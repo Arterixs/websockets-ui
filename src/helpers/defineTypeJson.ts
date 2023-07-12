@@ -1,4 +1,11 @@
-import { isAddUserObject, isAttackObject, isRegObject, isRoomObject, isShipsObject } from '../types/typeGuards.js';
+import {
+  isAddUserObject,
+  isAttackObject,
+  isRandomAttackObject,
+  isRegObject,
+  isRoomObject,
+  isShipsObject,
+} from '../types/typeGuards.js';
 
 export const defineTypeJson = (data: unknown) => {
   if (data && typeof data === 'object' && !Array.isArray(data)) {
@@ -15,6 +22,9 @@ export const defineTypeJson = (data: unknown) => {
       return data;
     }
     if (isAttackObject(data)) {
+      return data;
+    }
+    if (isRandomAttackObject(data)) {
       return data;
     }
     throw new Error();

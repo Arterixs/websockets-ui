@@ -25,6 +25,8 @@ export interface ShipObjectMap {
   direction: boolean;
   positionX: number;
   positionY: number;
+  truePositionX: number;
+  truePositionY: number;
   hitpoint: number;
   shoot: boolean;
 }

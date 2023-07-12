@@ -37,6 +37,8 @@ class Model {
           direction: false,
           positionX: j,
           positionY: i,
+          truePositionX: j,
+          truePositionY: i,
           hitpoint: 0,
           shoot: false,
         });
@@ -55,6 +57,8 @@ class Model {
           direction,
           positionX: x,
           positionY: y,
+          truePositionX: direction ? x : x + i,
+          truePositionY: direction ? y + i : y,
           hitpoint,
           shoot: false,
         };

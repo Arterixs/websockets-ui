@@ -7,4 +7,5 @@ export const enum TypeData {
   ATTACK = 'attack',
   TURN = 'turn',
   START_GAME = 'start_game',
+  RANDOM_ATTACK = 'randomAttack',
 }

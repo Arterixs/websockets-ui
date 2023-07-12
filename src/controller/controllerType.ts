@@ -9,6 +9,8 @@ import { AddShips } from '../types/interface/addShips.js';
 import { addShips } from '../handlers/addShips.js';
 import { AttackClient } from '../types/interface/attack.js';
 import { attackShips } from '../handlers/attackShips.js';
+import { RandomAttackClient } from '../types/interface/randomAttack.js';
+import { randomAttack } from '../handlers/randomAttack.js';
 
 export const controllerType = {
   reg: (object: ClientReqData, socket: Socket) => regType(object as RegObject, socket),
@@ -16,4 +18,5 @@ export const controllerType = {
   add_user_to_room: (object: ClientReqData, socket: Socket) => addGame(object as AddUserToRoomClient, socket),
   add_ships: (object: ClientReqData, socket: Socket) => addShips(object as AddShips, socket),
   attack: (object: ClientReqData, socket: Socket) => attackShips(object as AttackClient, socket),
+  randomAttack: (object: ClientReqData, socket: Socket) => randomAttack(object as RandomAttackClient, socket),
 };
