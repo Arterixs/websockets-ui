@@ -40,5 +40,6 @@ module.exports = {
     'import/extensions': [1, { ts: 'always', js: 'always' }],
     'import/prefer-default-export': 'off',
     'import/no-unresolved': 'off',
+    'no-constructor-return': 'off',
   },
 };

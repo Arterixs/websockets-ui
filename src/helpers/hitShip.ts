@@ -6,7 +6,11 @@ import { getResultDataObject, getResponseObject } from './createrObjects.js';
 import { StatusResultOfAttacks } from '../types/enum/typeResultAttack.js';
 import { getBodyShip } from './getBodyShip.js';
 import { getCoordsAroundShip } from './getCoordsAroundShip.js';
-import { dataBase } from '../data_base/data_base.js';
+// import { dataBase } from '../data_base/data_base.js';
+import { gameRoomsBase } from '../store/gameRoomsController.js';
+import { winnersBase } from '../store/winnersController.js';
+import { userBase } from '../store/userController.js';
+import { socketBase } from '../store/socketController.js';
 
 export const hitInShip = (
   dataAttack: AttackData,
@@ -18,7 +22,7 @@ export const hitInShip = (
 ) => {
   const { direction, length, positionX, positionY } = placeShoot;
   const { x, y, indexPlayer, gameId } = dataAttack;
-  dataBase.changePlayerMove(gameId, indexPlayer);
+  gameRoomsBase.changePlayerMove(gameId, indexPlayer);
 
   if (hitpontShip) {
     socketsArray.forEach((webSocket) => {
@@ -65,17 +69,17 @@ export const hitInShip = (
       socketsArray[0]?.send(getResponseObject(TypeData.TURN, JSON.stringify({ currentPlayer: indexPlayer })));
       socketsArray[1]?.send(getResponseObject(TypeData.TURN, JSON.stringify({ currentPlayer: indexPlayer })));
     } else {
-      const allUsers = dataBase.getSocketsUsers();
+      const allUsers = socketBase.getAllSocketsUsers();
       socketsArray.forEach((webSocket) => {
         webSocket.send(getResponseObject(TypeData.FINISH, JSON.stringify({ winPlayer: indexPlayer })));
       });
-      dataBase.deleteGameRoom(gameId);
-      const userWin = dataBase.getUser(socketsArray[0]!);
+      gameRoomsBase.deleteGameRoom(gameId);
+      const userWin = userBase.getUser(socketsArray[0]!);
       const name = userWin?.data.name;
       if (name) {
-        dataBase.setWinners(name);
+        winnersBase.setWinners(name);
       }
-      const winners = dataBase.getWinnersString();
+      const winners = winnersBase.getWinnersString();
       // eslint-disable-next-line no-restricted-syntax
       for (const user of allUsers) {
         user.send(getResponseObject(TypeData.UPDATE_WINNERS, winners));

@@ -1,8 +1,11 @@
 import { Socket } from '../types/types/common.js';
-import { dataBase } from '../data_base/data_base.js';
+// import { dataBase } from '../data_base/data_base.js';
 import { DataReg, RegObject, UpdateUser } from '../types/interface/reg.js';
 import { TypeData } from '../types/enum/typeData.js';
 import { getResponseObject } from '../helpers/createrObjects.js';
+import { winnersBase } from '../store/winnersController.js';
+import { userBase } from '../store/userController.js';
+import { roomsBase } from '../store/roomsController.js';
 
 const updateDataPropertyUser = (data: string, index: number) => {
   const { password, name } = JSON.parse(data) as DataReg;
@@ -19,12 +22,12 @@ const updateObject = (obj: RegObject, socket: Socket, idUser: number) => {
 };
 
 export const regType = (user: RegObject, socket: Socket) => {
-  const idUser = dataBase.getIdUser();
+  const idUser = userBase.getIdUser();
   const fullUser = updateObject(user, socket, idUser);
-  dataBase.setUser(socket, fullUser);
-  const userReg = dataBase.getUser(socket);
-  const actualRoom = dataBase.getActualStringRoom();
-  const winners = dataBase.getWinnersString();
+  userBase.setUser(socket, fullUser);
+  const userReg = userBase.getUser(socket);
+  const actualRoom = roomsBase.getActualStringRoom();
+  const winners = winnersBase.getWinnersString();
   socket.send(JSON.stringify({ type: TypeData.REG, data: JSON.stringify(userReg?.data), id: 0 }));
   socket.send(JSON.stringify({ type: TypeData.UPDATE_ROOM, data: actualRoom, id: 0 }));
   socket.send(getResponseObject(TypeData.UPDATE_WINNERS, winners));

@@ -1,8 +1,10 @@
 import { PositionShipsObject } from '../types/interface/position.js';
 import { AddShips } from '../types/interface/addShips.js';
 import { Socket } from '../types/types/common.js';
-import { dataBase } from '../data_base/data_base.js';
+// import { dataBase } from '../data_base/data_base.js';
 import { TypeData } from '../types/enum/typeData.js';
+import { gameRoomsBase } from '../store/gameRoomsController.js';
+import { socketBase } from '../store/socketController.js';
 
 const MAX_AMOUNT_PLAYERS_IN_ROOM = 2;
 
@@ -18,14 +20,14 @@ export const updateShips = (dataShips: PositionShipsObject) => {
 export const addShips = (object: AddShips, _socket: Socket) => {
   const objectData = JSON.parse(object.data) as PositionShipsObject;
   const upgradeShips = updateShips(objectData);
-  dataBase.setDataGame(objectData.gameId, upgradeShips);
-  const amountPlayersReady = dataBase.getSizePlayers(objectData.gameId);
+  gameRoomsBase.setDataGame(objectData.gameId, upgradeShips);
+  const amountPlayersReady = gameRoomsBase.getSizePlayers(objectData.gameId);
   if (amountPlayersReady === MAX_AMOUNT_PLAYERS_IN_ROOM) {
-    const arrayRoom = dataBase.getRoomGame(objectData.gameId)?.players;
+    const arrayRoom = gameRoomsBase.getRoomGame(objectData.gameId)?.players;
     if (arrayRoom) {
       arrayRoom.forEach((item) => {
         const { indexPlayer, ships } = item;
-        const socketUser = dataBase.getSocketUsers(indexPlayer);
+        const socketUser = socketBase.getSocketUser(indexPlayer);
         socketUser?.send(
           JSON.stringify({
             type: TypeData.START_GAME,

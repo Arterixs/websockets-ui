@@ -1,8 +1,9 @@
 import { Socket } from '../types/types/common.js';
 import { DataRandAttact, RandomAttackClient } from '../types/interface/randomAttack.js';
-import { dataBase } from '../data_base/data_base.js';
+// import { dataBase } from '../data_base/data_base.js';
 import { getDataPlaceShoot } from './supportAttack.js';
 import { shoot } from '../helpers/shoot.js';
+import { gameRoomsBase } from '../store/gameRoomsController.js';
 
 const randomCoords = (amount: number) => Math.floor(Math.random() * amount);
 
@@ -18,7 +19,7 @@ const createObjectGame = (gameId: number, x: number, y: number, indexPlayer: num
 
 export const randomAttack = (object: RandomAttackClient, socket: Socket) => {
   const data = JSON.parse(object.data) as DataRandAttact;
-  const dataGame = dataBase.getRoomGame(data.gameId)?.players;
+  const dataGame = gameRoomsBase.getRoomGame(data.gameId)?.players;
   if (dataGame) {
     const { dataEnemy } = getDataPlaceShoot(dataGame, data.indexPlayer);
     const { gameMap } = dataEnemy;
