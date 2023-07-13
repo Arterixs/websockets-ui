@@ -1,7 +1,6 @@
 import { PositionShipsObject } from '../types/interface/position.js';
 import { AddShips } from '../types/interface/addShips.js';
 import { Socket } from '../types/types/common.js';
-// import { dataBase } from '../data_base/data_base.js';
 import { TypeData } from '../types/enum/typeData.js';
 import { gameRoomsBase } from '../store/gameRoomsController.js';
 import { socketBase } from '../store/socketController.js';

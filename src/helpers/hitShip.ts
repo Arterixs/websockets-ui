@@ -6,11 +6,7 @@ import { getResultDataObject, getResponseObject } from './createrObjects.js';
 import { StatusResultOfAttacks } from '../types/enum/typeResultAttack.js';
 import { getBodyShip } from './getBodyShip.js';
 import { getCoordsAroundShip } from './getCoordsAroundShip.js';
-// import { dataBase } from '../data_base/data_base.js';
-import { gameRoomsBase } from '../store/gameRoomsController.js';
-import { winnersBase } from '../store/winnersController.js';
-import { userBase } from '../store/userController.js';
-import { socketBase } from '../store/socketController.js';
+import { gameRoomsBase, socketBase, userBase, winnersBase } from '../store/index.js';
 
 export const hitInShip = (
   dataAttack: AttackData,

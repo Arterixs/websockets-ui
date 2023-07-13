@@ -1,9 +1,8 @@
 import { Socket } from '../types/types/common.js';
 import { DataRandAttact, RandomAttackClient } from '../types/interface/randomAttack.js';
-// import { dataBase } from '../data_base/data_base.js';
 import { getDataPlaceShoot } from './supportAttack.js';
 import { shoot } from '../helpers/shoot.js';
-import { gameRoomsBase } from '../store/gameRoomsController.js';
+import { gameRoomsBase } from '../store/index.js';
 
 const randomCoords = (amount: number) => Math.floor(Math.random() * amount);
 

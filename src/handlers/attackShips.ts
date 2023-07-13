@@ -3,7 +3,7 @@ import { AttackClient, AttackData } from '../types/interface/attack.js';
 import { Socket } from '../types/types/common.js';
 import { checkMovePlayer, checkShootPlace, getDataPlaceShoot } from './supportAttack.js';
 import { shoot } from '../helpers/shoot.js';
-import { gameRoomsBase } from '../store/gameRoomsController.js';
+import { gameRoomsBase } from '../store/index.js';
 
 export const attackShips = (object: AttackClient, socket: Socket) => {
   const dataAttack = JSON.parse(object.data) as AttackData;

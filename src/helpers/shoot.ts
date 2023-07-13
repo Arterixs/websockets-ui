@@ -2,13 +2,11 @@ import { defineHitpointShip, getDataPlaceShoot } from '../handlers/supportAttack
 import { ShipObjectMap } from '../types/interface/addShips.js';
 import { AttackData } from '../types/interface/attack.js';
 import { ShipStorage, Socket } from '../types/types/common.js';
-// import { dataBase } from '../data_base/data_base.js';
 import { hitInShip } from './hitShip.js';
 import { getResultDataObject, getResponseObject } from './createrObjects.js';
 import { TypeData } from '../types/enum/typeData.js';
 import { StatusResultOfAttacks } from '../types/enum/typeResultAttack.js';
-import { gameRoomsBase } from '../store/gameRoomsController.js';
-import { socketBase } from '../store/socketController.js';
+import { gameRoomsBase, socketBase } from '../store/index.js';
 
 export const shoot = (socket: Socket, dataAttack: AttackData, dataGame: ShipStorage[], placeShoot: ShipObjectMap) => {
   const { x, y, gameId, indexPlayer } = dataAttack;

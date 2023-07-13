@@ -1,11 +1,8 @@
 import { Socket } from '../types/types/common.js';
-// import { dataBase } from '../data_base/data_base.js';
 import { DataReg, RegObject, UpdateUser } from '../types/interface/reg.js';
 import { TypeData } from '../types/enum/typeData.js';
 import { getResponseObject } from '../helpers/createrObjects.js';
-import { winnersBase } from '../store/winnersController.js';
-import { userBase } from '../store/userController.js';
-import { roomsBase } from '../store/roomsController.js';
+import { roomsBase, userBase, winnersBase } from '../store/index.js';
 
 const updateDataPropertyUser = (data: string, index: number) => {
   const { password, name } = JSON.parse(data) as DataReg;

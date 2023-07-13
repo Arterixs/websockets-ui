@@ -1,5 +1,4 @@
-import { gameRoomsBase } from '../store/gameRoomsController.js';
-// import { dataBase } from '../data_base/data_base.js';
+import { gameRoomsBase } from '../store/index.js';
 import { ShipObjectMap } from '../types/interface/addShips.js';
 import { ShipStorage, UpgradeShips } from '../types/types/common.js';
 

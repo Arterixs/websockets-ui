@@ -1,10 +1,7 @@
 import { Socket } from '../types/types/common.js';
 import { RoomObject } from '../types/interface/room.js';
-// import { dataBase } from '../data_base/data_base.js';
 import { TypeData } from '../types/enum/typeData.js';
-import { userBase } from '../store/userController.js';
-import { roomsBase } from '../store/roomsController.js';
-import { socketBase } from '../store/socketController.js';
+import { roomsBase, userBase, socketBase } from '../store/index.js';
 
 const createObjectRoom = (data: string) => {
   const object = {

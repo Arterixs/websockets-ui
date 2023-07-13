@@ -5,21 +5,17 @@ import { defineTypeJson } from '../helpers/defineTypeJson.js';
 import { userBase } from '../store/userController.js';
 
 export const onConnect = (socket: Socket) => {
-  try {
-    socket.on('message', (message: Buffer) => {
-      try {
-        const newMessage = convertToJson(message);
-        const objectData = defineTypeJson(newMessage);
-        controllerType[objectData.type](objectData, socket);
-      } catch (err) {
-        console.log(err);
-      }
-    });
-    socket.on('close', () => {
-      userBase.deleteUser(socket);
-      console.log('Пользователь отключился');
-    });
-  } catch (err) {
-    console.log(err);
-  }
+  socket.on('message', (message: Buffer) => {
+    try {
+      const newMessage = convertToJson(message);
+      const objectData = defineTypeJson(newMessage);
+      controllerType[objectData.type](objectData, socket);
+    } catch (err) {
+      console.log(err);
+    }
+  });
+  socket.on('close', () => {
+    userBase.deleteUser(socket);
+    console.log('Пользователь отключился');
+  });
 };
