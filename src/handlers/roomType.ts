@@ -15,6 +15,7 @@ const createObjectRoom = (data: string) => {
 const createDataObject = (roomId: number, name: string, index: number) => {
   const arrRoom = {
     roomId,
+    idOwnerRoom: index,
     roomUsers: [
       {
         name,

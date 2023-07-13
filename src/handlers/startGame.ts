@@ -17,6 +17,11 @@ export const addGame = (object: AddUserToRoomClient, socket: Socket) => {
       return;
     }
     arrUsersInRoom.push({ name: currentUser.data.name, index: currentUser.data.index });
+    const checkCurrentRoom = dataBase.getRoomDataBase();
+    const index = checkCurrentRoom.find((user) => user.idOwnerRoom === currentUser.data.index);
+    if (index) {
+      dataBase.deleteRoom(index.roomId);
+    }
     dataBase.deleteRoom(idRoom);
     const arrUsersPlayInRoom = [socketOwnerRoom, socket];
     const idPlayers = [ownerId, currentUser.data.index];

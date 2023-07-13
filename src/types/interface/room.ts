@@ -15,6 +15,7 @@ export interface RoomResponse {
 
 export interface RoomData {
   roomId: number;
+  idOwnerRoom: number;
   roomUsers: RoomUsers[];
 }
 

@@ -13,7 +13,8 @@ export const hitInShip = (
   hitpontShip: boolean,
   placeShoot: ShipObjectMap,
   socketsArray: Socket[],
-  gameMap: ShipObjectMap[][]
+  gameMap: ShipObjectMap[][],
+  commonHits: number
 ) => {
   const { direction, length, positionX, positionY } = placeShoot;
   const { x, y, indexPlayer, gameId } = dataAttack;
@@ -60,7 +61,26 @@ export const hitInShip = (
         )
       );
     });
-    socketsArray[0]?.send(getResponseObject(TypeData.TURN, JSON.stringify({ currentPlayer: indexPlayer })));
-    socketsArray[1]?.send(getResponseObject(TypeData.TURN, JSON.stringify({ currentPlayer: indexPlayer })));
+    if (commonHits) {
+      socketsArray[0]?.send(getResponseObject(TypeData.TURN, JSON.stringify({ currentPlayer: indexPlayer })));
+      socketsArray[1]?.send(getResponseObject(TypeData.TURN, JSON.stringify({ currentPlayer: indexPlayer })));
+    } else {
+      const allUsers = dataBase.getSocketsUsers();
+      socketsArray.forEach((webSocket) => {
+        webSocket.send(getResponseObject(TypeData.FINISH, JSON.stringify({ winPlayer: indexPlayer })));
+      });
+      dataBase.deleteGameRoom(gameId);
+      const userWin = dataBase.getUser(socketsArray[0]!);
+      const name = userWin?.data.name;
+      if (name) {
+        dataBase.setWinners(name);
+      }
+      const winners = dataBase.getWinnersString();
+      // eslint-disable-next-line no-restricted-syntax
+      for (const user of allUsers) {
+        user.send(getResponseObject(TypeData.UPDATE_WINNERS, winners));
+      }
+      console.log('finish');
+    }
   }
 };

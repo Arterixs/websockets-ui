@@ -2,11 +2,14 @@ import { NewShips, Socket } from '../types/types/common.js';
 import { UpdateUser } from '../types/interface/reg.js';
 import { DatabaseGameRooms, RoomData } from '../types/interface/room.js';
 import { DataShips, ShipObjectMap } from '../types/interface/addShips.js';
+import { Winners } from '../types/interface/winners.js';
 
 class Model {
   private userDataBase: Map<Socket, UpdateUser>;
 
   private roomDataBase: RoomData[];
+
+  private winners: Winners[];
 
   private socketCommonsUser: Map<number, Socket>;
 
@@ -19,10 +22,24 @@ class Model {
   constructor() {
     this.userDataBase = new Map();
     this.roomDataBase = [];
+    this.winners = [];
     this.socketCommonsUser = new Map();
     this.gameRooms = new Map();
     this.idGeneration = 1;
     this.idRoomGeneration = 1;
+  }
+
+  setWinners(name: string) {
+    const isCheckWinner = this.winners.find((winner) => winner.name === name);
+    if (isCheckWinner) {
+      isCheckWinner.wins += 1;
+    } else {
+      this.winners.push({ name, wins: 1 });
+    }
+  }
+
+  getWinnersString() {
+    return JSON.stringify(this.winners);
   }
 
   // eslint-disable-next-line class-methods-use-this
@@ -102,6 +119,10 @@ class Model {
   //   this.gameRooms.set(idRoom, dataTroops);
   // }
 
+  public deleteGameRoom(idRoom: number) {
+    this.gameRooms.delete(idRoom);
+  }
+
   public getRoomGame(idRoom: number) {
     return this.gameRooms.get(idRoom);
   }
@@ -156,6 +177,10 @@ class Model {
 
   public getIdUser() {
     return this.idGeneration;
+  }
+
+  public getRoomDataBase() {
+    return this.roomDataBase;
   }
 
   public getRoom(idRoom: number) {

@@ -20,7 +20,7 @@ export const shoot = (socket: Socket, dataAttack: AttackData, dataGame: ShipStor
     const commonHits = dataEnemy.commonHits - 1;
     // eslint-disable-next-line no-param-reassign
     dataGame[dataEnemyIndex]!.commonHits = commonHits;
-    hitInShip(dataAttack, hitpontShip, placeShoot, socketsArray, dataEnemy.gameMap);
+    hitInShip(dataAttack, hitpontShip, placeShoot, socketsArray, dataEnemy.gameMap, commonHits);
   } else {
     dataBase.changePlayerMove(gameId, dataEnemy.indexPlayer);
     socketsArray.forEach((webSocket) => {
