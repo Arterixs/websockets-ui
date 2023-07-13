@@ -10,4 +10,5 @@ export const enum TypeData {
   RANDOM_ATTACK = 'randomAttack',
   FINISH = 'finish',
   UPDATE_WINNERS = 'update_winners',
+  CREATE_GAME = 'create_game',
 }

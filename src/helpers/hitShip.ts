@@ -1,12 +1,13 @@
 import { TypeData } from '../types/enum/typeData.js';
+import { StatusResultOfAttacks } from '../types/enum/typeResultAttack.js';
 import { ShipObjectMap } from '../types/interface/addShips.js';
 import { AttackData } from '../types/interface/attack.js';
 import { Socket } from '../types/types/common.js';
 import { getResultDataObject, getResponseObject } from './createrObjects.js';
-import { StatusResultOfAttacks } from '../types/enum/typeResultAttack.js';
 import { getBodyShip } from './getBodyShip.js';
 import { getCoordsAroundShip } from './getCoordsAroundShip.js';
-import { gameRoomsBase, socketBase, userBase, winnersBase } from '../store/index.js';
+import { gameRoomsBase } from '../store/index.js';
+import { finishGame } from './finishGame.js';
 
 export const hitInShip = (
   dataAttack: AttackData,
@@ -31,56 +32,41 @@ export const hitInShip = (
     const bodyShip = getBodyShip(direction, positionX, positionY, length);
     const placesAroundShip = getCoordsAroundShip(gameMap, bodyShip);
 
-    bodyShip.forEach((item) => {
+    bodyShip.forEach((boat) => {
       socketsArray[0]?.send(
         getResponseObject(
           TypeData.ATTACK,
-          getResultDataObject(item.x, item.y, indexPlayer, StatusResultOfAttacks.KILLED)
+          getResultDataObject(boat.x, boat.y, indexPlayer, StatusResultOfAttacks.KILLED)
         )
       );
       socketsArray[1]?.send(
         getResponseObject(
           TypeData.ATTACK,
-          getResultDataObject(item.x, item.y, indexPlayer, StatusResultOfAttacks.KILLED)
+          getResultDataObject(boat.x, boat.y, indexPlayer, StatusResultOfAttacks.KILLED)
         )
       );
     });
-    placesAroundShip.forEach((item) => {
-      // eslint-disable-next-line no-param-reassign
-      item.shoot = true;
+    placesAroundShip.forEach((place) => {
+      place.shoot = true;
       socketsArray[0]?.send(
         getResponseObject(
           TypeData.ATTACK,
-          getResultDataObject(item.positionX, item.positionY, indexPlayer, StatusResultOfAttacks.MISS)
+          getResultDataObject(place.positionX, place.positionY, indexPlayer, StatusResultOfAttacks.MISS)
         )
       );
       socketsArray[1]?.send(
         getResponseObject(
           TypeData.ATTACK,
-          getResultDataObject(item.positionX, item.positionY, indexPlayer, StatusResultOfAttacks.MISS)
+          getResultDataObject(place.positionX, place.positionY, indexPlayer, StatusResultOfAttacks.MISS)
         )
       );
     });
+
     if (commonHits) {
       socketsArray[0]?.send(getResponseObject(TypeData.TURN, JSON.stringify({ currentPlayer: indexPlayer })));
       socketsArray[1]?.send(getResponseObject(TypeData.TURN, JSON.stringify({ currentPlayer: indexPlayer })));
     } else {
-      const allUsers = socketBase.getAllSocketsUsers();
-      socketsArray.forEach((webSocket) => {
-        webSocket.send(getResponseObject(TypeData.FINISH, JSON.stringify({ winPlayer: indexPlayer })));
-      });
-      gameRoomsBase.deleteGameRoom(gameId);
-      const userWin = userBase.getUser(socketsArray[0]!);
-      const name = userWin?.data.name;
-      if (name) {
-        winnersBase.setWinners(name);
-      }
-      const winners = winnersBase.getWinnersString();
-      // eslint-disable-next-line no-restricted-syntax
-      for (const user of allUsers) {
-        user.send(getResponseObject(TypeData.UPDATE_WINNERS, winners));
-      }
-      console.log('finish');
+      finishGame(socketsArray, indexPlayer, gameId);
     }
   }
 };

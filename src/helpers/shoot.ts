@@ -1,4 +1,4 @@
-import { defineHitpointShip, getDataPlaceShoot } from '../handlers/supportAttack.js';
+import { defineHitpointShip, getDataPlaceShoot } from './supportAttack.js';
 import { ShipObjectMap } from '../types/interface/addShips.js';
 import { AttackData } from '../types/interface/attack.js';
 import { ShipStorage, Socket } from '../types/types/common.js';
@@ -13,12 +13,10 @@ export const shoot = (socket: Socket, dataAttack: AttackData, dataGame: ShipStor
   const { dataEnemyIndex, dataEnemy } = getDataPlaceShoot(dataGame, indexPlayer);
   const enemySocket = socketBase.getSocketUser(dataEnemy.indexPlayer);
   const socketsArray = [socket, enemySocket!];
-  // eslint-disable-next-line no-param-reassign
   placeShoot.shoot = true;
   if (placeShoot.type === 'ship') {
     const hitpontShip = defineHitpointShip(dataEnemy.ships, placeShoot.positionX, placeShoot.positionY);
     const commonHits = dataEnemy.commonHits - 1;
-    // eslint-disable-next-line no-param-reassign
     dataGame[dataEnemyIndex]!.commonHits = commonHits;
     hitInShip(dataAttack, hitpontShip, placeShoot, socketsArray, dataEnemy.gameMap, commonHits);
   } else {

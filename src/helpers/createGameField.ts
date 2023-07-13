@@ -1,10 +1,13 @@
 import { ShipObjectMap, DataShips } from '../types/interface/addShips.js';
 
+const ROWS_DEFAULT = 10;
+const COLUMN_DEFAULT = 10;
+
 export const createGameField = (ships: DataShips[]) => {
   const gameMap: ShipObjectMap[][] = [];
-  for (let i = 0; i < 10; i += 1) {
+  for (let i = 0; i < COLUMN_DEFAULT; i += 1) {
     const column = [];
-    for (let j = 0; j < 10; j += 1) {
+    for (let j = 0; j < ROWS_DEFAULT; j += 1) {
       column.push({
         type: 'empty',
         length: 0,

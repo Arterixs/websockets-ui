@@ -21,3 +21,27 @@ export const getResponseObject = (type: TypeData, data: string | Record<string, 
   };
   return JSON.stringify(object);
 };
+
+export const createObjectGame = (gameId: number, x: number, y: number, indexPlayer: number) => {
+  const object = {
+    gameId,
+    x,
+    y,
+    indexPlayer,
+  };
+  return object;
+};
+
+export const createRoomObject = (roomId: number, name: string, index: number) => {
+  const arrRoom = {
+    roomId,
+    idOwnerRoom: index,
+    roomUsers: [
+      {
+        name,
+        index,
+      },
+    ],
+  };
+  return arrRoom;
+};

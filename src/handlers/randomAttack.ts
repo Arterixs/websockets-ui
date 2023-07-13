@@ -1,20 +1,11 @@
 import { Socket } from '../types/types/common.js';
 import { DataRandAttact, RandomAttackClient } from '../types/interface/randomAttack.js';
-import { getDataPlaceShoot } from './supportAttack.js';
+import { getDataPlaceShoot } from '../helpers/supportAttack.js';
 import { shoot } from '../helpers/shoot.js';
 import { gameRoomsBase } from '../store/index.js';
+import { createObjectGame } from '../helpers/createrObjects.js';
 
 const randomCoords = (amount: number) => Math.floor(Math.random() * amount);
-
-const createObjectGame = (gameId: number, x: number, y: number, indexPlayer: number) => {
-  const object = {
-    gameId,
-    x,
-    y,
-    indexPlayer,
-  };
-  return object;
-};
 
 export const randomAttack = (object: RandomAttackClient, socket: Socket) => {
   const data = JSON.parse(object.data) as DataRandAttact;
