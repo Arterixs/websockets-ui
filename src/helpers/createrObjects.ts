@@ -1,5 +1,7 @@
+import { Socket } from '../types/types/common.js';
 import { TypeData } from '../types/enum/typeData.js';
 import { StatusResultOfAttacks } from '../types/enum/typeResultAttack.js';
+import { DataBase } from '../types/interface/reg.js';
 
 export const getResultDataObject = (x: number, y: number, currentPlayer: number, status: StatusResultOfAttacks) => {
   const data = {
@@ -44,4 +46,14 @@ export const createRoomObject = (roomId: number, name: string, index: number) =>
     ],
   };
   return arrRoom;
+};
+
+export const createRegObject = (socket: Socket, obj: DataBase) => {
+  const newObj = {
+    type: TypeData.REG,
+    data: obj,
+    socket,
+    id: 0,
+  };
+  return newObj;
 };

@@ -15,7 +15,12 @@ export const onConnect = (socket: Socket) => {
     }
   });
   socket.on('close', () => {
+    const user = userBase.getUser(socket);
     userBase.deleteUser(socket);
+    if (user) {
+      userBase.changeStatusUser(user.data.name, false);
+      console.log(userBase.getUserStorage(user.data.name));
+    }
     console.log('Пользователь отключился');
   });
 };

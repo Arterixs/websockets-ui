@@ -1,18 +1,20 @@
-import { Socket } from '../types/types/common.js';
+import { Socket, UserStorage } from '../types/types/common.js';
 import { UpdateUser } from '../types/interface/reg.js';
 import { DatabaseGameRooms, RoomData } from '../types/interface/room.js';
 import { Winners } from '../types/interface/winners.js';
 
 export class Storage {
-  public userDataBase: Map<Socket, UpdateUser>;
+  public userDataBase: Map<Socket, UpdateUser> = new Map();
 
-  public roomDataBase: RoomData[];
+  public roomDataBase: RoomData[] = [];
 
-  public winners: Winners[];
+  public userStorage: Map<string, UserStorage> = new Map();
 
-  public socketCommonsUser: Map<number, Socket>;
+  public winners: Winners[] = [];
 
-  public gameRooms: Map<number, DatabaseGameRooms>;
+  public socketCommonsUser: Map<number, Socket> = new Map();
+
+  public gameRooms: Map<number, DatabaseGameRooms> = new Map();
 
   public idUsersGeneration: number;
 
@@ -25,12 +27,6 @@ export class Storage {
       return Storage.instanse;
     }
     Storage.instanse = this;
-
-    this.userDataBase = new Map();
-    this.roomDataBase = [];
-    this.winners = [];
-    this.socketCommonsUser = new Map();
-    this.gameRooms = new Map();
     this.idUsersGeneration = 1;
     this.idRoomGeneration = 1;
   }

@@ -1,5 +1,5 @@
 import WebSocket from 'ws';
-import { RegObject } from '../interface/reg.js';
+import { DataBase, RegObject } from '../interface/reg.js';
 import { RoomObject } from '../interface/room.js';
 import { AddUserToRoomClient } from '../interface/addUser.js';
 import { AddShips, ShipObjectMap } from '../interface/addShips.js';
@@ -15,3 +15,5 @@ export type ShipStorage = NewShips & {
   gameMap: ShipObjectMap[][];
   commonHits: number;
 };
+
+export type UserStorage = DataBase & { status: boolean };
