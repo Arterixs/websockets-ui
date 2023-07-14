@@ -1,4 +1,4 @@
-import { ERROR_LENGTH, ERROR_PASSWORD, ERROR_STATUS } from 'src/constants/index.js';
+import { ERROR_LENGTH, ERROR_PASSWORD, ERROR_STATUS } from '../constants/index.js';
 import { userBase } from '../store/index.js';
 
 export const checkValidationPassword = (name: string, password: string, index: number) => {
