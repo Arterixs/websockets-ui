@@ -18,23 +18,4 @@ export const registration = (user: RegObject, socket: Socket) => {
     socket.send(getResponseObject(TypeData.UPDATE_ROOM, actualRoom));
     socket.send(getResponseObject(TypeData.UPDATE_WINNERS, winners));
   }
-
-  // if (isUserInBase) {
-  //   const fullUserObject = checkUserRegValidation(name, password);
-  //   if (fullUserObject.error) {
-  //     socket.send(getResponseObject(TypeData.REG, JSON.stringify(fullUserObject)));
-  //     return;
-  //   }
-  //   userData = createRegObject(socket, fullUserObject);
-  //   userBase.changeStatusUser(name, true);
-  // } else {
-  //   const idUser = userBase.getIdUser();
-  //   const userValid = checkValidationPassword(name, password, idUser);
-  //   if (userValid.error) {
-  //     socket.send(getResponseObject(TypeData.REG, JSON.stringify(userValid)));
-  //     return;
-  //   }
-  //   userData = createRegObject(socket, userValid);
-  //   userBase.setUserStorage(userValid);
-  // }
 };

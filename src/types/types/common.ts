@@ -16,4 +16,10 @@ export type ShipStorage = NewShips & {
   commonHits: number;
 };
 
-export type UserStorage = DataBase & { status: boolean };
+export type UserStorage = DataBase & {
+  status: boolean;
+  isOwnerRoom: boolean;
+  isGame: boolean;
+  idRoom: number;
+  idGame: number;
+};

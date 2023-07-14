@@ -2,7 +2,7 @@ import { Socket } from '../types/types/common.js';
 import { convertToJson } from '../helpers/convertToJson.js';
 import { controllerType } from '../controller/controllerType.js';
 import { defineTypeJson } from '../helpers/defineTypeJson.js';
-import { userBase } from '../store/userController.js';
+import { disconnect } from '../helpers/disconnect.js';
 
 export const onConnect = (socket: Socket) => {
   socket.on('message', (message: Buffer) => {
@@ -15,12 +15,7 @@ export const onConnect = (socket: Socket) => {
     }
   });
   socket.on('close', () => {
-    const user = userBase.getUser(socket);
-    userBase.deleteUser(socket);
-    if (user) {
-      userBase.changeStatusUser(user.data.name, false);
-      console.log(userBase.getUserStorage(user.data.name));
-    }
+    disconnect(socket);
     console.log('Пользователь отключился');
   });
 };

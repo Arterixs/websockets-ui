@@ -5,35 +5,37 @@ import { roomsBase, userBase, socketBase } from '../store/index.js';
 import { getResponseObject } from '../helpers/createrObjects.js';
 
 export const startGame = (object: AddUserToRoomClient, socket: Socket) => {
-  const { data } = object;
-  const convertData = JSON.parse(data) as DataRoom;
-  const idRoom = convertData.indexRoom;
-  const room = roomsBase.getRoom(idRoom);
+  const { indexRoom } = JSON.parse(object.data) as DataRoom;
+  const room = roomsBase.getRoom(indexRoom);
   const currentUser = userBase.getUser(socket);
   const arrUsersInRoom = room?.roomUsers;
-  const ownerId = arrUsersInRoom?.at(0)?.index;
-  if (room && currentUser && ownerId && arrUsersInRoom) {
-    const socketOwnerRoom = socketBase.getSocketUser(ownerId);
+  const ownerRoom = arrUsersInRoom?.at(0);
+  if (room && currentUser && ownerRoom && arrUsersInRoom) {
+    const { index, name } = ownerRoom;
+    const socketOwnerRoom = socketBase.getSocketUser(index);
     if (socket === socketOwnerRoom) {
       return;
     }
     arrUsersInRoom.push({ name: currentUser.data.name, index: currentUser.data.index });
     const checkCurrentRoom = roomsBase.getRoomDataBase();
-    const index = checkCurrentRoom.find((user) => user.idOwnerRoom === currentUser.data.index);
-
-    if (index) {
-      roomsBase.deleteRoom(index.roomId);
+    const currentPlayerRoom = checkCurrentRoom.find((user) => user.idOwnerRoom === currentUser.data.index);
+    if (currentPlayerRoom) {
+      roomsBase.deleteRoom(currentPlayerRoom.roomId);
+      userBase.changeUserRoomId(currentUser.data.name, 0);
     }
-    roomsBase.deleteRoom(idRoom);
-
+    roomsBase.deleteRoom(indexRoom);
+    userBase.changeStatusUser(currentUser.data.name, true, false, true);
+    userBase.changeUserGameId(currentUser.data.name, indexRoom);
+    userBase.changeStatusUser(name, true, false, true);
+    userBase.changeUserGameId(name, indexRoom);
     const arrUsersPlayInRoom = [socketOwnerRoom, socket];
-    const idPlayers = [ownerId, currentUser.data.index];
+    const idPlayers = [index, currentUser.data.index];
     const allUsersSocket = socketBase.getAllSocketsUsers();
     const updateRooms = roomsBase.getActualStringRoom();
     arrUsersPlayInRoom.forEach((userSocket, indx) => {
       if (userSocket) {
         userSocket.send(
-          getResponseObject(TypeData.CREATE_GAME, JSON.stringify({ idGame: idRoom, idPlayer: idPlayers[indx] }))
+          getResponseObject(TypeData.CREATE_GAME, JSON.stringify({ idGame: indexRoom, idPlayer: idPlayers[indx] }))
         );
       }
     });

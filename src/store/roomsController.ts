@@ -47,7 +47,7 @@ class RoomsController {
     this.storage.roomDataBase = updateArray;
   }
 
-  public getRoomId() {
+  public getNewRoomId() {
     return this.storage.idRoomGeneration;
   }
 }

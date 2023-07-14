@@ -6,10 +6,17 @@ import { TypeData } from '../types/enum/typeData.js';
 export const finishGame = (socketsArray: Socket[], indexPlayer: number, gameId: number) => {
   const allUsers = socketBase.getAllSocketsUsers();
   gameRoomsBase.deleteGameRoom(gameId);
+
   const userWin = userBase.getUser(socketsArray[0]!);
+  const userLose = userBase.getUser(socketsArray[1]!);
   const name = userWin?.data.name;
-  if (name) {
+  const nameLose = userLose?.data.name;
+  if (name && nameLose) {
     winnersBase.setWinners(name);
+    userBase.changeStatusUser(name, true, false, false);
+    userBase.changeStatusUser(nameLose, true, false, false);
+    userBase.changeUserRoomId(name, 0);
+    userBase.changeUserRoomId(nameLose, 0);
   }
   const winners = winnersBase.getWinnersString();
 

@@ -16,7 +16,7 @@ class UserController {
   }
 
   public setUserStorage(user: DataBase) {
-    const updateUSer = { ...user, status: true };
+    const updateUSer = { ...user, status: true, isOwnerRoom: false, isGame: false, idRoom: 0, idGame: 0 };
     this.storage.userStorage.set(updateUSer.name, updateUSer);
   }
 
@@ -28,9 +28,23 @@ class UserController {
     return this.storage.userStorage.get(name);
   }
 
-  public changeStatusUser(name: string, status: boolean) {
+  public get() {
+    return this.storage.userStorage;
+  }
+
+  public changeStatusUser(name: string, status: boolean, isOwnerRoom = false, isGame = false) {
     const user = this.storage.userStorage.get(name);
-    this.storage.userStorage.set(name, { ...user!, status });
+    this.storage.userStorage.set(name, { ...user!, status, isOwnerRoom, isGame });
+  }
+
+  public changeUserGameId(name: string, idGame: number) {
+    const user = this.storage.userStorage.get(name);
+    this.storage.userStorage.set(name, { ...user!, idGame });
+  }
+
+  public changeUserRoomId(name: string, idRoom: number) {
+    const user = this.storage.userStorage.get(name);
+    this.storage.userStorage.set(name, { ...user!, idRoom });
   }
 
   public getAllUSers() {
