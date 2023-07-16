@@ -1,9 +1,15 @@
-import { ERROR_LENGTH, ERROR_PASSWORD, ERROR_STATUS } from '../constants/index.js';
+import { BOT_NAME, ERROR_LENGTH, ERROR_NAME, ERROR_PASSWORD, ERROR_STATUS } from '../constants/index.js';
 import { userBase } from '../store/index.js';
 
-export const checkValidationPassword = (name: string, password: string, index: number) => {
+export const checkValidationPasswordOrName = (name: string, password: string, index: number) => {
   const isError = password.length < 5 || name.length < 5;
-  return { password, name, error: isError, errorText: isError ? ERROR_LENGTH : '', index };
+  if (isError) {
+    return { password, name, error: isError, errorText: ERROR_LENGTH, index };
+  }
+  if (name === BOT_NAME) {
+    return { password, name, error: true, errorText: ERROR_NAME, index };
+  }
+  return { password, name, error: false, errorText: '', index };
 };
 
 export const checkUserRegValidation = (name: string, password: string) => {
