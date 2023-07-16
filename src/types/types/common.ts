@@ -6,9 +6,17 @@ import { AddShips, ShipObjectMap } from '../interface/addShips.js';
 import { AttackClient } from '../interface/attack.js';
 import { PositionShipsObject, ShipsObject } from '../interface/position.js';
 import { RandomAttackClient } from '../interface/randomAttack.js';
+import { SinglePlayObj } from '../interface/singleplayer.js';
 
 export type Socket = WebSocket;
-export type ClientReqData = RegObject | RoomObject | AddUserToRoomClient | AddShips | AttackClient | RandomAttackClient;
+export type ClientReqData =
+  | RegObject
+  | RoomObject
+  | AddUserToRoomClient
+  | AddShips
+  | AttackClient
+  | RandomAttackClient
+  | SinglePlayObj;
 export type UpgradeShips = ShipsObject & { hitpoint: number };
 export type NewShips = Pick<PositionShipsObject, 'gameId' | 'indexPlayer'> & { ships: UpgradeShips[] };
 export type ShipStorage = NewShips & {

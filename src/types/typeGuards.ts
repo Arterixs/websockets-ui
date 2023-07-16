@@ -5,6 +5,7 @@ import { AttackClient } from './interface/attack.js';
 import { RandomAttackClient } from './interface/randomAttack.js';
 import { RegObject } from './interface/reg.js';
 import { RoomObject } from './interface/room.js';
+import { SinglePlayObj } from './interface/singleplayer.js';
 
 export const isRegObject = (obj: object): obj is RegObject => 'type' in obj && obj.type === TypeData.REG;
 
@@ -19,3 +20,6 @@ export const isAttackObject = (obj: object): obj is AttackClient => 'type' in ob
 
 export const isRandomAttackObject = (obj: object): obj is RandomAttackClient =>
   'type' in obj && obj.type === TypeData.RANDOM_ATTACK;
+
+export const isSinglePlayObject = (obj: object): obj is SinglePlayObj =>
+  'type' in obj && obj.type === TypeData.SINGLE_PLAY;

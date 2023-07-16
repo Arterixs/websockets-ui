@@ -11,6 +11,8 @@ import { AttackClient } from '../types/interface/attack.js';
 import { attackShips } from '../handlers/attackShips.js';
 import { RandomAttackClient } from '../types/interface/randomAttack.js';
 import { randomAttack } from '../handlers/randomAttack.js';
+import { SinglePlayObj } from '../types/interface/singleplayer.js';
+import { single } from '../singleplayer/single.js';
 
 export const controllerType = {
   reg: (object: ClientReqData, socket: Socket) => registration(object as RegObject, socket),
@@ -19,4 +21,5 @@ export const controllerType = {
   add_ships: (object: ClientReqData, socket: Socket) => addShips(object as AddShips, socket),
   attack: (object: ClientReqData, socket: Socket) => attackShips(object as AttackClient, socket),
   randomAttack: (object: ClientReqData, socket: Socket) => randomAttack(object as RandomAttackClient, socket),
+  single_play: (object: ClientReqData, socket: Socket) => single(object as SinglePlayObj, socket),
 };

@@ -8,6 +8,9 @@ import { getBodyShip } from './getBodyShip.js';
 import { getCoordsAroundShip } from './getCoordsAroundShip.js';
 import { gameRoomsBase } from '../store/index.js';
 import { finishGame } from './finishGame.js';
+import { RandomAttackClient } from '../types/interface/randomAttack.js';
+import { randomAttack } from '../handlers/randomAttack.js';
+import { shootBot } from '../singleplayer/shootBot.js';
 
 export const hitInShip = (
   dataAttack: AttackData,
@@ -28,6 +31,9 @@ export const hitInShip = (
       );
       webSocket.send(getResponseObject(TypeData.TURN, JSON.stringify({ currentPlayer: indexPlayer })));
     });
+    if (indexPlayer === 0) {
+      shootBot(gameId);
+    }
   } else {
     const bodyShip = getBodyShip(direction, positionX, positionY, length);
     const placesAroundShip = getCoordsAroundShip(gameMap, bodyShip);
@@ -65,6 +71,9 @@ export const hitInShip = (
     if (commonHits) {
       socketsArray[0]?.send(getResponseObject(TypeData.TURN, JSON.stringify({ currentPlayer: indexPlayer })));
       socketsArray[1]?.send(getResponseObject(TypeData.TURN, JSON.stringify({ currentPlayer: indexPlayer })));
+      if (indexPlayer === 0) {
+        shootBot(gameId);
+      }
     } else {
       finishGame(socketsArray, indexPlayer, gameId);
     }

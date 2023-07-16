@@ -5,6 +5,7 @@ import {
   isRegObject,
   isRoomObject,
   isShipsObject,
+  isSinglePlayObject,
 } from '../types/typeGuards.js';
 
 export const defineTypeJson = (data: unknown) => {
@@ -25,6 +26,9 @@ export const defineTypeJson = (data: unknown) => {
       return data;
     }
     if (isRandomAttackObject(data)) {
+      return data;
+    }
+    if (isSinglePlayObject(data)) {
       return data;
     }
     throw new Error();

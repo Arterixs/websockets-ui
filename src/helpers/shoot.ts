@@ -7,12 +7,21 @@ import { getResultDataObject, getResponseObject } from './createrObjects.js';
 import { TypeData } from '../types/enum/typeData.js';
 import { StatusResultOfAttacks } from '../types/enum/typeResultAttack.js';
 import { gameRoomsBase, socketBase } from '../store/index.js';
+import { shootBot } from '../singleplayer/shootBot.js';
 
-export const shoot = (socket: Socket, dataAttack: AttackData, dataGame: ShipStorage[], placeShoot: ShipObjectMap) => {
+export const shoot = (
+  socket: Socket | undefined,
+  dataAttack: AttackData,
+  dataGame: ShipStorage[],
+  placeShoot: ShipObjectMap
+) => {
   const { x, y, gameId, indexPlayer } = dataAttack;
   const { dataEnemyIndex, dataEnemy } = getDataPlaceShoot(dataGame, indexPlayer);
   const enemySocket = socketBase.getSocketUser(dataEnemy.indexPlayer);
-  const socketsArray = [socket, enemySocket!];
+  const socketsArray = socket ? [socket] : [];
+  if (enemySocket) {
+    socketsArray.push(enemySocket);
+  }
   placeShoot.shoot = true;
   if (placeShoot.type === 'ship') {
     const hitpontShip = defineHitpointShip(dataEnemy.ships, placeShoot.positionX, placeShoot.positionY);
@@ -27,5 +36,8 @@ export const shoot = (socket: Socket, dataAttack: AttackData, dataGame: ShipStor
       );
       webSocket.send(getResponseObject(TypeData.TURN, JSON.stringify({ currentPlayer: dataEnemy.indexPlayer })));
     });
+    if (enemySocket === undefined) {
+      shootBot(gameId);
+    }
   }
 };

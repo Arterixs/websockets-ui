@@ -7,7 +7,7 @@ import { createObjectGame } from '../helpers/createrObjects.js';
 
 const randomCoords = (amount: number) => Math.floor(Math.random() * amount);
 
-export const randomAttack = (object: RandomAttackClient, socket: Socket) => {
+export const randomAttack = (object: RandomAttackClient, socket?: Socket) => {
   const data = JSON.parse(object.data) as DataRandAttact;
   const dataGame = gameRoomsBase.getRoomGame(data.gameId)?.players;
   if (dataGame) {
@@ -17,10 +17,9 @@ export const randomAttack = (object: RandomAttackClient, socket: Socket) => {
     const randomNumber = randomCoords(placeEmpty.length);
     const placeShoot = placeEmpty[randomNumber];
     if (placeShoot) {
-      const { truePositionY, truePositionX, positionX, positionY } = placeShoot;
-      const choosePlace = gameMap[truePositionY]![truePositionX]!;
-      const objectAttack = createObjectGame(data.gameId, positionX, positionY, data.indexPlayer);
-      shoot(socket, objectAttack, dataGame, choosePlace);
+      const { truePositionY, truePositionX } = placeShoot;
+      const objectAttack = createObjectGame(data.gameId, truePositionX, truePositionY, data.indexPlayer);
+      shoot(socket, objectAttack, dataGame, placeShoot);
     }
   }
 };

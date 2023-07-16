@@ -11,4 +11,5 @@ export const enum TypeData {
   FINISH = 'finish',
   UPDATE_WINNERS = 'update_winners',
   CREATE_GAME = 'create_game',
+  SINGLE_PLAY = 'single_play',
 }

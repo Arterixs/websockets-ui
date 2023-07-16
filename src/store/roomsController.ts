@@ -50,6 +50,10 @@ class RoomsController {
   public getNewRoomId() {
     return this.storage.idRoomGeneration;
   }
+
+  public generateIdRoom() {
+    this.storage.increaseIdRooms();
+  }
 }
 
 export const roomsBase = new RoomsController();
