@@ -1,5 +1,5 @@
 import { TypeData } from '../enum/typeData.js';
-import { ShipStorage } from '../types/common.js';
+import { ShipStorage } from '../types/index.js';
 
 export interface RoomObject {
   type: TypeData.CREATE_ROOM;

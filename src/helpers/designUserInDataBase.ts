@@ -1,4 +1,4 @@
-import { Socket } from '../types/types/common.js';
+import { Socket } from '../types/types/index.js';
 import { checkUserRegValidation, checkValidationPasswordOrName } from './validationUser.js';
 import { createRegObject, getResponseObject } from './createrObjects.js';
 import { TypeData } from '../types/enum/typeData.js';

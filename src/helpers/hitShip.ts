@@ -2,7 +2,7 @@ import { TypeData } from '../types/enum/typeData.js';
 import { StatusResultOfAttacks } from '../types/enum/typeResultAttack.js';
 import { ShipObjectMap } from '../types/interface/addShips.js';
 import { AttackData } from '../types/interface/attack.js';
-import { Socket } from '../types/types/common.js';
+import { Socket } from '../types/types/index.js';
 import { getResultDataObject, getResponseObject } from './createrObjects.js';
 import { getBodyShip } from './getBodyShip.js';
 import { getCoordsAroundShip } from './getCoordsAroundShip.js';

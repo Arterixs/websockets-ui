@@ -1,7 +1,7 @@
 import { defineHitpointShip, getDataPlaceShoot } from './supportAttack.js';
 import { ShipObjectMap } from '../types/interface/addShips.js';
 import { AttackData } from '../types/interface/attack.js';
-import { ShipStorage, Socket } from '../types/types/common.js';
+import { ShipStorage, Socket } from '../types/types/index.js';
 import { hitInShip } from './hitShip.js';
 import { getResultDataObject, getResponseObject } from './createrObjects.js';
 import { TypeData } from '../types/enum/typeData.js';

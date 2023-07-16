@@ -1,4 +1,4 @@
-import { Socket } from '../types/types/common.js';
+import { Socket } from '../types/types/index.js';
 import { convertToJson } from '../helpers/convertToJson.js';
 import { controllerType } from '../controller/controllerType.js';
 import { defineTypeJson } from '../helpers/defineTypeJson.js';

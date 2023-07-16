@@ -1,4 +1,4 @@
-import { ClientReqData, Socket } from '../types/types/common.js';
+import { ClientReqData, Socket } from '../types/types/index.js';
 import { registration } from '../handlers/registration.js';
 import { RegObject } from '../types/interface/reg.js';
 import { RoomObject } from '../types/interface/room.js';

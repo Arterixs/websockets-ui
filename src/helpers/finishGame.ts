@@ -1,5 +1,5 @@
 import { gameRoomsBase, socketBase, userBase, winnersBase } from '../store/index.js';
-import { Socket } from '../types/types/common.js';
+import { Socket } from '../types/types/index.js';
 import { getResponseObject } from './createrObjects.js';
 import { TypeData } from '../types/enum/typeData.js';
 import { BOT_NAME } from '../constants/index.js';

@@ -1,4 +1,4 @@
-import { Socket, UserStorage } from '../types/types/common.js';
+import { Socket, UserStorage } from '../types/types/index.js';
 import { UpdateUser } from '../types/interface/reg.js';
 import { DatabaseGameRooms, RoomData } from '../types/interface/room.js';
 import { Winners } from '../types/interface/winners.js';

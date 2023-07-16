@@ -1,4 +1,4 @@
-import { Socket } from '../types/types/common.js';
+import { Socket } from '../types/types/index.js';
 import { TypeData } from '../types/enum/typeData.js';
 import { StatusResultOfAttacks } from '../types/enum/typeResultAttack.js';
 import { DataBase } from '../types/interface/reg.js';

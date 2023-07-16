@@ -1,6 +1,6 @@
 import { TypeData } from '../types/enum/typeData.js';
 import { gameRoomsBase, roomsBase, socketBase, userBase, winnersBase } from '../store/index.js';
-import { ShipStorage, Socket } from '../types/types/common.js';
+import { ShipStorage, Socket } from '../types/types/index.js';
 import { getResponseObject } from '../helpers/createrObjects.js';
 import { DataBase } from '../types/interface/reg.js';
 import { BOT_NAME } from '../constants/index.js';

@@ -1,5 +1,5 @@
 import { createGameField } from '../helpers/createGameField.js';
-import { NewShips } from '../types/types/common.js';
+import { NewShips } from '../types/types/index.js';
 import { Storage } from './storage.js';
 
 class GameRoomsController {

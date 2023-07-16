@@ -26,6 +26,7 @@ module.exports = {
       rules: {
         'import/no-default-export': 'off',
         '@typescript-eslint/no-non-null-assertion': 'off',
+        '@typescript-eslint/no-unused-vars': 'off',
       },
     },
   ],
@@ -43,5 +44,6 @@ module.exports = {
     'no-constructor-return': 'off',
     'no-restricted-syntax': 'off',
     'no-param-reassign': 'off',
+    'no-console': 'off',
   },
 };

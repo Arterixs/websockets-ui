@@ -1,4 +1,4 @@
-import { Socket } from 'src/types/types/common.js';
+import { Socket } from 'src/types/types/index.js';
 import { Storage } from './storage.js';
 import { DataBase, UpdateUser } from '../types/interface/reg.js';
 

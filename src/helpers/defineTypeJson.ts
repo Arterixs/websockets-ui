@@ -31,7 +31,7 @@ export const defineTypeJson = (data: unknown) => {
     if (isSinglePlayObject(data)) {
       return data;
     }
-    throw new Error();
+    throw new Error('Request data is not expected data');
   }
-  throw new Error();
+  throw new Error('Request data is not object');
 };

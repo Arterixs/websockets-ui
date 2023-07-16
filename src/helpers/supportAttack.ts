@@ -1,6 +1,6 @@
 import { gameRoomsBase } from '../store/index.js';
 import { ShipObjectMap } from '../types/interface/addShips.js';
-import { ShipStorage, UpgradeShips } from '../types/types/common.js';
+import { ShipStorage, UpgradeShips } from '../types/types/index.js';
 
 export const checkMovePlayer = (gameId: number, indexMovedPlayer: number) => {
   const currentUser = gameRoomsBase.getPlayerMove(gameId);

@@ -1,6 +1,6 @@
 import { TypeData } from '../types/enum/typeData.js';
 import { AddUserToRoomClient, DataRoom } from '../types/interface/addUser.js';
-import { Socket } from '../types/types/common.js';
+import { Socket } from '../types/types/index.js';
 import { roomsBase, userBase, socketBase } from '../store/index.js';
 import { getResponseObject } from '../helpers/createrObjects.js';
 

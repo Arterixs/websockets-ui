@@ -1,4 +1,4 @@
-import { Socket } from '../types/types/common.js';
+import { Socket } from '../types/types/index.js';
 import { RoomObject } from '../types/interface/room.js';
 import { TypeData } from '../types/enum/typeData.js';
 import { roomsBase, userBase, socketBase } from '../store/index.js';

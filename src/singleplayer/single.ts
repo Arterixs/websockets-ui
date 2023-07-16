@@ -1,5 +1,5 @@
 import { SinglePlayObj } from 'src/types/interface/singleplayer.js';
-import { Socket } from '../types/types/common.js';
+import { Socket } from '../types/types/index.js';
 import { getResponseObject } from '../helpers/createrObjects.js';
 import { TypeData } from '../types/enum/typeData.js';
 import { userBase } from '../store/userController.js';

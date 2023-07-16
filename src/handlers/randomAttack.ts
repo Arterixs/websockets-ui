@@ -1,4 +1,4 @@
-import { Socket } from '../types/types/common.js';
+import { Socket } from '../types/types/index.js';
 import { DataRandAttact, RandomAttackClient } from '../types/interface/randomAttack.js';
 import { getDataPlaceShoot } from '../helpers/supportAttack.js';
 import { shoot } from '../helpers/shoot.js';

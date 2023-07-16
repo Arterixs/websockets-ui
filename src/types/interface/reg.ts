@@ -1,5 +1,5 @@
 import { TypeData } from '../enum/typeData.js';
-import { Socket } from '../types/common.js';
+import { Socket } from '../types/index.js';
 
 export interface RegObject {
   type: TypeData.REG;

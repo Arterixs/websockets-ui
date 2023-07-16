@@ -1,6 +1,6 @@
 import { gameRoomsBase, roomsBase } from '../store/index.js';
 import { dataBotPosition } from './dataDefaultPlayer.js';
-import { NewShips } from '../types/types/common.js';
+import { NewShips } from '../types/types/index.js';
 
 export const createBot = () => {
   const randomPos = Math.floor(Math.random() * dataBotPosition.length);
