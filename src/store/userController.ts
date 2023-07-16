@@ -16,7 +16,15 @@ class UserController {
   }
 
   public setUserStorage(user: DataBase) {
-    const updateUSer = { ...user, status: true, isOwnerRoom: false, isGame: false, idRoom: 0, idGame: 0 };
+    const updateUSer = {
+      ...user,
+      status: true,
+      isOwnerRoom: false,
+      isGame: false,
+      idRoom: 0,
+      idGame: 0,
+      singlePlay: false,
+    };
     this.storage.userStorage.set(updateUSer.name, updateUSer);
   }
 
@@ -30,6 +38,19 @@ class UserController {
 
   public get() {
     return this.storage.userStorage;
+  }
+
+  public checkSinglePlay(name: string) {
+    if (this.storage.userStorage.has(name)) {
+      const user = this.storage.userStorage.get(name)!;
+      return user.singlePlay;
+    }
+    return false;
+  }
+
+  public changeSinglePlay(name: string, single: boolean) {
+    const user = this.storage.userStorage.get(name);
+    this.storage.userStorage.set(name, { ...user!, singlePlay: single });
   }
 
   public changeStatusUser(name: string, status: boolean, isOwnerRoom = false, isGame = false) {

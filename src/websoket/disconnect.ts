@@ -3,6 +3,7 @@ import { gameRoomsBase, roomsBase, socketBase, userBase, winnersBase } from '../
 import { ShipStorage, Socket } from '../types/types/common.js';
 import { getResponseObject } from '../helpers/createrObjects.js';
 import { DataBase } from '../types/interface/reg.js';
+import { BOT_NAME } from '../constants/index.js';
 
 export const disconnect = (socket: Socket) => {
   const user = userBase.getUser(socket);
@@ -10,13 +11,22 @@ export const disconnect = (socket: Socket) => {
   const index = user?.data.index;
   if (name && index) {
     const userData = userBase.getUserStorage(name)!;
-    const { isGame, isOwnerRoom, idRoom, idGame } = userData;
+    const { isGame, isOwnerRoom, idRoom, idGame, singlePlay } = userData;
     const allSockets = socketBase.getAllSocketsUsers();
     if (isOwnerRoom) {
       roomsBase.deleteRoom(idRoom);
       const actualRooms = roomsBase.getActualStringRoom();
       for (const sockUser of allSockets) {
         sockUser.send(getResponseObject(TypeData.UPDATE_ROOM, actualRooms));
+      }
+    }
+    if (singlePlay) {
+      winnersBase.setWinners(BOT_NAME);
+      userBase.changeSinglePlay(name, false);
+      const winners = winnersBase.getWinnersString();
+      const allSock = socketBase.getAllSocketsUsers();
+      for (const sockUser of allSock) {
+        sockUser.send(getResponseObject(TypeData.UPDATE_WINNERS, winners));
       }
     }
     if (isGame) {

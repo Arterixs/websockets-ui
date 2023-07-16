@@ -8,8 +8,6 @@ import { getBodyShip } from './getBodyShip.js';
 import { getCoordsAroundShip } from './getCoordsAroundShip.js';
 import { gameRoomsBase } from '../store/index.js';
 import { finishGame } from './finishGame.js';
-import { RandomAttackClient } from '../types/interface/randomAttack.js';
-import { randomAttack } from '../handlers/randomAttack.js';
 import { shootBot } from '../singleplayer/shootBot.js';
 
 export const hitInShip = (

@@ -14,6 +14,7 @@ export const designUserInDataBase = (socket: Socket, isUserInBase: boolean, name
     userBase.changeStatusUser(name, true);
     return createRegObject(socket, fullUserObject);
   }
+
   const idUser = userBase.getIdUser();
   const userValid = checkValidationPasswordOrName(name, password, idUser);
   if (userValid.error) {

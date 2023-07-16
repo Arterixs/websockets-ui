@@ -16,11 +16,15 @@ export const finishGame = (socketsArray: Socket[], indexPlayer: number, gameId: 
     winnersBase.setWinners(name);
     userBase.changeStatusUser(name, true, false, false);
     userBase.changeUserRoomId(name, 0);
+    if (userBase.checkSinglePlay(name)) {
+      userBase.changeSinglePlay(name, false);
+    }
   }
   if (nameLose) {
     userBase.changeStatusUser(nameLose, true, false, false);
     userBase.changeUserRoomId(nameLose, 0);
   }
+
   const winners = winnersBase.getWinnersString();
 
   socketsArray.forEach((webSocket) => {

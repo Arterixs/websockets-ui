@@ -30,4 +30,5 @@ export type UserStorage = DataBase & {
   isGame: boolean;
   idRoom: number;
   idGame: number;
+  singlePlay: boolean;
 };

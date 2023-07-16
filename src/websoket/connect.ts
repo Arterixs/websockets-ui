@@ -11,7 +11,7 @@ export const onConnect = (socket: Socket) => {
       const objectData = defineTypeJson(newMessage);
       controllerType[objectData.type](objectData, socket);
     } catch (err) {
-      console.log(err);
+      console.error(err);
     }
   });
   socket.on('close', () => {
