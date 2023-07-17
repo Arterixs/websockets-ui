@@ -1,0 +1,5 @@
+*config.ts
+**/node_modules
+**/dist
+**/src/http_server
+**/front
